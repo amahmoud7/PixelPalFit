@@ -12,6 +12,8 @@
     <string>6.0</string>
     <key>CFBundleName</key>
     <string>$(PRODUCT_NAME)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Pixel Pace</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
@@ -23,9 +25,9 @@
     <key>NSSupportsLiveActivities</key>
     <true/>
     <key>NSHealthShareUsageDescription</key>
-    <string>Pixel Pal uses your step count to reflect your daily activity vitality in your avatar.</string>
+    <string>Pixel Pace uses your step count to evolve your character and track your walking progress.</string>
     <key>NSHealthUpdateUsageDescription</key>
-    <string>Pixel Pal reads your step count from Health to energize your avatar.</string>
+    <string>Pixel Pace reads your step count from Health to power your character's evolution.</string>
     <key>UIApplicationSceneManifest</key>
     <dict>
         <key>UIApplicationSupportsMultipleScenes</key>

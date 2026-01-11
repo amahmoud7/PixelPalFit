@@ -144,7 +144,7 @@ struct ContentView: View {
                 }) {
                     HStack {
                         Image(systemName: "stop.circle.fill")
-                        Text("Stop Pixel Pal")
+                        Text("Stop Pixel Pace")
                     }
                     .font(.headline)
                     .foregroundColor(.white)
@@ -189,7 +189,7 @@ struct ContentView: View {
                 }) {
                     HStack {
                         Image(systemName: "play.circle.fill")
-                        Text("Start Pixel Pal")
+                        Text("Start Pixel Pace")
                     }
                     .font(.headline)
                     .foregroundColor(.black)

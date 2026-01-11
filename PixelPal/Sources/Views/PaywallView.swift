@@ -34,7 +34,7 @@ struct PaywallView: View {
                         .padding(.vertical, 20)
 
                     // Title
-                    Text("Your PixelPal is evolving")
+                    Text("Your character is evolving")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -93,7 +93,7 @@ struct PaywallView: View {
                             ProgressView()
                                 .tint(.black)
                         } else {
-                            Text("Unlock PixelPal")
+                            Text("Unlock Premium")
                                 .font(.headline)
                                 .foregroundColor(.black)
                         }

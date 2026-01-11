@@ -212,7 +212,7 @@ struct PixelPalAccessoryInlineView: View {
 
     var body: some View {
         // Inline: Just phase indicator, no numbers per v1.1 spec
-        Label("PixelPal Phase \(entry.phase)", systemImage: phaseIcon)
+        Label("Pixel Pace Phase \(entry.phase)", systemImage: phaseIcon)
     }
 }
 
@@ -232,7 +232,7 @@ struct PixelPalHomeWidget: Widget {
                     .background(Color.black)
             }
         }
-        .configurationDisplayName("Pixel Pal")
+        .configurationDisplayName("Pixel Pace")
         .description("Your ambient walking companion.")
         .supportedFamilies([.systemSmall])
     }
@@ -253,8 +253,8 @@ struct PixelPalLockScreenWidget: Widget {
                 PixelPalLockScreenView(entry: entry)
             }
         }
-        .configurationDisplayName("Pixel Pal")
-        .description("Your PixelPal on the Lock Screen.")
+        .configurationDisplayName("Pixel Pace")
+        .description("Your Pixel Pace character on the Lock Screen.")
         .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }

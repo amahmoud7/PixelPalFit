@@ -103,7 +103,7 @@ private struct IdentityHookScreen: View {
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
 
-            Text("PixelPal turns movement into a living character you see all day.")
+            Text("Pixel Pace turns movement into a living character you see all day.")
                 .font(.body)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -115,7 +115,7 @@ private struct IdentityHookScreen: View {
 
             Spacer().frame(height: 40)
 
-            OnboardingButton(title: "Start my PixelPal", action: onContinue)
+            OnboardingButton(title: "Start my Pixel Pace", action: onContinue)
         }
         .padding(.horizontal, 24)
     }
@@ -130,7 +130,7 @@ private struct CharacterSelectionScreen: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            Text("Choose your PixelPal")
+            Text("Choose your character")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
@@ -209,7 +209,7 @@ private struct TruthMomentScreen: View {
             }
             .padding(.vertical, 20)
 
-            Text("PixelPal shows the truth in real time.")
+            Text("Pixel Pace shows the truth in real time.")
                 .font(.body)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -316,7 +316,7 @@ private struct PermissionsScreen: View {
                     .frame(width: 80, height: 80)
             }
 
-            Text("Let PixelPal walk with you")
+            Text("Let Pixel Pace walk with you")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
