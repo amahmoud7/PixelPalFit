@@ -1,11 +1,12 @@
 import SwiftUI
 
-/// 5-screen onboarding flow (v1.1 spec).
+/// 6-screen onboarding flow (v1.1 spec).
 /// 1. Identity Hook - "Your steps tell a story"
 /// 2. Character Selection - Gender + starter style
-/// 3. Truth Moment - Step benchmarks
-/// 4. Differentiation - "Not another step counter"
-/// 5. Permissions - HealthKit request
+/// 3. Phase Preview - See evolution phases with slider
+/// 4. Truth Moment - Step benchmarks
+/// 5. Differentiation - "Not another step counter"
+/// 6. Permissions - HealthKit request
 struct OnboardingView: View {
     @EnvironmentObject var healthManager: HealthKitManager
     @State private var currentStep: Int = 1
@@ -18,7 +19,7 @@ struct OnboardingView: View {
 
             VStack(spacing: 0) {
                 // Progress indicator
-                ProgressIndicator(currentStep: currentStep, totalSteps: 5)
+                ProgressIndicator(currentStep: currentStep, totalSteps: 6)
                     .padding(.top, 20)
                     .padding(.horizontal, 40)
 
@@ -36,10 +37,15 @@ struct OnboardingView: View {
                             onContinue: { nextStep() }
                         )
                     case 3:
-                        TruthMomentScreen(onContinue: { nextStep() })
+                        PhasePreviewScreen(
+                            selectedGender: selectedGender ?? .male,
+                            onContinue: { nextStep() }
+                        )
                     case 4:
-                        DifferentiationScreen(onContinue: { nextStep() })
+                        TruthMomentScreen(onContinue: { nextStep() })
                     case 5:
+                        DifferentiationScreen(onContinue: { nextStep() })
+                    case 6:
                         PermissionsScreen(
                             selectedGender: selectedGender,
                             selectedStyle: selectedStyle,
@@ -185,7 +191,158 @@ private struct GenderButton: View {
     }
 }
 
-// MARK: - Screen 3: Truth Moment
+// MARK: - Screen 3: Phase Preview
+
+private struct PhasePreviewScreen: View {
+    let selectedGender: Gender
+    let onContinue: () -> Void
+
+    @State private var selectedPhase: Double = 1
+    @State private var animationFrame: Int = 1
+
+    private let timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+
+    private var currentPhase: Int {
+        Int(selectedPhase)
+    }
+
+    private var phaseInfo: (name: String, description: String, color: Color, stepsRequired: String) {
+        switch currentPhase {
+        case 1:
+            return ("Seedling", "Just getting started", .gray, "0 steps")
+        case 2:
+            return ("Growing", "Building momentum", .blue, "25,000 steps")
+        case 3:
+            return ("Thriving", "In your stride", .purple, "75,000 steps")
+        case 4:
+            return ("Legendary", "Peak evolution", .orange, "200,000 steps")
+        default:
+            return ("Seedling", "Just getting started", .gray, "0 steps")
+        }
+    }
+
+    private var avatarState: AvatarState {
+        switch currentPhase {
+        case 1: return .low
+        case 2: return .neutral
+        case 3: return .vital
+        case 4: return .vital
+        default: return .low
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Watch your character evolve")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+
+            Text("The more you walk, the more they grow")
+                .font(.body)
+                .foregroundColor(.gray)
+
+            Spacer().frame(height: 10)
+
+            // Animated character
+            ZStack {
+                Circle()
+                    .fill(phaseInfo.color.opacity(0.2))
+                    .frame(width: 160, height: 160)
+
+                Image(SpriteAssets.spriteName(gender: selectedGender, state: avatarState, frame: animationFrame))
+                    .interpolation(.none)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+            }
+            .onReceive(timer) { _ in
+                animationFrame = animationFrame == 1 ? 2 : 1
+            }
+
+            // Phase info
+            VStack(spacing: 8) {
+                HStack(spacing: 8) {
+                    Image(systemName: phaseIcon)
+                        .foregroundColor(phaseInfo.color)
+                    Text("Phase \(currentPhase)")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Text("• \(phaseInfo.name)")
+                        .font(.subheadline)
+                        .foregroundColor(phaseInfo.color)
+                }
+
+                Text(phaseInfo.description)
+                    .font(.caption)
+                    .foregroundColor(.gray)
+
+                Text(phaseInfo.stepsRequired)
+                    .font(.caption2)
+                    .foregroundColor(phaseInfo.color.opacity(0.8))
+            }
+            .padding(.vertical, 10)
+
+            // Phase slider
+            VStack(spacing: 12) {
+                // Phase markers
+                HStack {
+                    ForEach(1...4, id: \.self) { phase in
+                        VStack(spacing: 4) {
+                            Circle()
+                                .fill(phase <= currentPhase ? phaseColor(for: phase) : Color.white.opacity(0.3))
+                                .frame(width: 12, height: 12)
+                            Text("\(phase)")
+                                .font(.caption2)
+                                .foregroundColor(phase <= currentPhase ? .white : .gray)
+                        }
+                        if phase < 4 {
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(.horizontal, 20)
+
+                // Slider
+                Slider(value: $selectedPhase, in: 1...4, step: 1)
+                    .tint(phaseInfo.color)
+                    .padding(.horizontal, 20)
+
+                Text("Drag to preview evolution phases")
+                    .font(.caption2)
+                    .foregroundColor(.gray.opacity(0.8))
+            }
+            .padding(.vertical, 10)
+
+            Spacer().frame(height: 20)
+
+            OnboardingButton(title: "Continue", action: onContinue)
+        }
+        .padding(.horizontal, 24)
+    }
+
+    private var phaseIcon: String {
+        switch currentPhase {
+        case 1: return "circle"
+        case 2: return "circle.fill"
+        case 3: return "star.fill"
+        case 4: return "sparkles"
+        default: return "circle"
+        }
+    }
+
+    private func phaseColor(for phase: Int) -> Color {
+        switch phase {
+        case 1: return .gray
+        case 2: return .blue
+        case 3: return .purple
+        case 4: return .orange
+        default: return .gray
+        }
+    }
+}
+
+// MARK: - Screen 4: Truth Moment
 
 private struct TruthMomentScreen: View {
     let onContinue: () -> Void
@@ -244,7 +401,7 @@ private struct StatRow: View {
     }
 }
 
-// MARK: - Screen 4: Differentiation
+// MARK: - Screen 5: Differentiation
 
 private struct DifferentiationScreen: View {
     let onContinue: () -> Void
@@ -299,7 +456,7 @@ private struct FeatureRow: View {
     }
 }
 
-// MARK: - Screen 5: Permissions
+// MARK: - Screen 6: Permissions
 
 private struct PermissionsScreen: View {
     let selectedGender: Gender?
