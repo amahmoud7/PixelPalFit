@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var cumulativeSteps: Int = 0
     @State private var weeklySteps: Int = 0
     @State private var previousPhase: Int = 1
+    @State private var showShareSheet: Bool = false
 
     private var isOnboardingComplete: Bool {
         let profile = PersistenceManager.shared.userProfile
@@ -70,12 +71,15 @@ struct ContentView: View {
         .sheet(isPresented: $showPaywall) {
             PaywallView(storeManager: storeManager, gender: gender)
         }
+        .sheet(isPresented: $showShareSheet) {
+            ShareSheetView(data: shareCardData)
+        }
     }
 
     // MARK: - Main Content
 
     private var mainContentView: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 24) {
                 // Top bar: Phase name + Crown button
                 topBar
@@ -141,6 +145,16 @@ struct ContentView: View {
                         .background(Color.white.opacity(0.08))
                         .clipShape(Circle())
                 }
+            }
+
+            // Share button
+            Button(action: { showShareSheet = true }) {
+                Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.white.opacity(0.7))
+                    .padding(8)
+                    .background(Color.white.opacity(0.08))
+                    .clipShape(Circle())
             }
         }
         .padding(.horizontal, 20)
@@ -248,6 +262,21 @@ struct ContentView: View {
         default: return .gray
         }
     }
+
+    // MARK: - Share
+
+    private var shareCardData: ShareCardData {
+        ShareCardData(
+            todaySteps: Int(healthManager.currentSteps),
+            weeklySteps: weeklySteps,
+            avatarState: avatarState,
+            gender: gender,
+            currentPhase: currentPhase,
+            isPremium: storeManager.isPremium,
+            weekDays: HistoryManager.shared.last7Days()
+        )
+    }
+
 
     // MARK: - State Management
 
