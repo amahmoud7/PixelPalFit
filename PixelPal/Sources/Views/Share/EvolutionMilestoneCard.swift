@@ -20,7 +20,7 @@ struct EvolutionMilestoneCard: View {
                 // Title
                 Text("My Pixel Pal")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(.white.opacity(0.9))
 
                 Text("Just Evolved!")
                     .font(.system(size: format == .story ? 28 : 22, weight: .bold, design: .rounded))
@@ -49,7 +49,7 @@ struct EvolutionMilestoneCard: View {
                 // Weekly steps
                 Text("\(data.weeklySteps.formatted()) steps this week")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(.white.opacity(0.6))
 
                 Spacer().frame(height: format == .story ? 12 : 8)
 
@@ -62,6 +62,7 @@ struct EvolutionMilestoneCard: View {
 
                 WatermarkView()
             }
+            .shadow(color: background == .transparent ? .black.opacity(0.9) : .clear, radius: 4)
         }
         .frame(width: format.pointSize.width, height: format.pointSize.height)
     }
@@ -79,7 +80,7 @@ struct EvolutionMilestoneCard: View {
                 .interpolation(.none)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: spriteSize, height: spriteSize)
-                .opacity(isReached ? 1.0 : 0.3)
+                .opacity(isReached ? 1.0 : 0.45)
                 .overlay(
                     isCurrent
                     ? RoundedRectangle(cornerRadius: 8)
@@ -90,7 +91,7 @@ struct EvolutionMilestoneCard: View {
 
             Text("\(phase)")
                 .font(.system(size: 9, weight: .bold, design: .rounded))
-                .foregroundColor(isReached ? data.phaseColor : .white.opacity(0.3))
+                .foregroundColor(isReached ? data.phaseColor : .white.opacity(0.45))
         }
     }
 

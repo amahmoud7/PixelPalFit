@@ -6,6 +6,7 @@ struct ShareSheetView: View {
     @State private var cardType: ShareCardType = .dailyProgress
     @State private var format: ShareCardFormat = .story
     @State private var background: ShareCardBackground = .darkGlow
+    @State private var toastMessage: String?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -17,156 +18,113 @@ struct ShareSheetView: View {
             Color(red: 0.04, green: 0.04, blue: 0.12)
                 .ignoresSafeArea()
 
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 16) {
-                    // Header
-                    VStack(spacing: 4) {
-                        Text("Share My Pixel Pace Stats")
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
+            VStack(spacing: 0) {
+                // Header
+                VStack(spacing: 4) {
+                    Text("Share My Pixel Pace Stats")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
 
-                        Text("Widget-style share cards with editable backgrounds")
-                            .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.4))
-                    }
-                    .padding(.top, 20)
-
-                    // Card type tabs
-                    HStack(spacing: 8) {
-                        ForEach(ShareCardType.allCases, id: \.self) { type in
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    cardType = type
-                                }
-                            } label: {
-                                Text(type.title)
-                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 8)
-                                    .background(
-                                        cardType == type
-                                        ? Color.white.opacity(0.15)
-                                        : Color.white.opacity(0.05)
-                                    )
-                                    .foregroundColor(
-                                        cardType == type ? .white : .white.opacity(0.4)
-                                    )
-                                    .clipShape(Capsule())
-                                    .overlay(
-                                        cardType == type
-                                        ? Capsule().stroke(Color.white.opacity(0.2), lineWidth: 1)
-                                        : nil
-                                    )
-                            }
-                        }
-                    }
-
-                    // Format toggle
-                    HStack(spacing: 8) {
-                        ForEach(ShareCardFormat.allCases, id: \.self) { fmt in
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    format = fmt
-                                }
-                            } label: {
-                                Text(fmt.title)
-                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                    .padding(.horizontal, 20)
-                                    .padding(.vertical, 8)
-                                    .background(
-                                        format == fmt
-                                        ? Color.white.opacity(0.15)
-                                        : Color.white.opacity(0.05)
-                                    )
-                                    .foregroundColor(
-                                        format == fmt ? .white : .white.opacity(0.4)
-                                    )
-                                    .clipShape(Capsule())
-                                    .overlay(
-                                        format == fmt
-                                        ? Capsule().stroke(Color.white.opacity(0.2), lineWidth: 1)
-                                        : nil
-                                    )
-                            }
-                        }
-                    }
-
-                    // Background label
-                    Text("BACKGROUND")
-                        .font(.system(size: 11, weight: .bold, design: .rounded))
-                        .foregroundColor(.white.opacity(0.35))
-                        .tracking(1)
-                        .padding(.top, 4)
-
-                    // Background picker
-                    HStack(spacing: 12) {
-                        ForEach(ShareCardBackground.allCases, id: \.self) { bg in
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    background = bg
-                                }
-                            } label: {
-                                backgroundThumbnail(bg)
-                            }
-                        }
-                    }
-
-                    // Card preview
-                    cardPreview
-                        .padding(.top, 4)
-
-                    // Action buttons
-                    VStack(spacing: 12) {
-                        // Instagram Story button
-                        Button {
-                            shareToInstagramStory()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "camera.fill")
-                                    .font(.system(size: 15, weight: .semibold))
-                                Text("Share to Instagram Story")
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 15)
-                            .background(
-                                LinearGradient(
-                                    colors: [
-                                        Color(red: 0.93, green: 0.27, blue: 0.47),
-                                        Color(red: 0.6, green: 0.2, blue: 0.8)
-                                    ],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
-                        }
-
-                        // General share button
-                        Button {
-                            shareGeneral()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "square.and.arrow.up")
-                                    .font(.system(size: 15, weight: .semibold))
-                                Text("Share")
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                            }
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 15)
-                            .background(Color.white.opacity(0.1))
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 14)
-                                    .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                            )
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 40)
+                    Text("Widget-style share cards with editable backgrounds")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.4))
                 }
+                .padding(.top, 16)
+                .padding(.bottom, 12)
+
+                // Card type tabs
+                HStack(spacing: 8) {
+                    ForEach(ShareCardType.allCases, id: \.self) { type in
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { cardType = type }
+                        } label: {
+                            Text(type.title)
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 7)
+                                .background(cardType == type ? Color.white.opacity(0.15) : Color.white.opacity(0.05))
+                                .foregroundColor(cardType == type ? .white : .white.opacity(0.4))
+                                .clipShape(Capsule())
+                                .overlay(
+                                    cardType == type
+                                    ? Capsule().stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                    : nil
+                                )
+                        }
+                    }
+                }
+                .padding(.bottom, 8)
+
+                // Format toggle
+                HStack(spacing: 8) {
+                    ForEach(ShareCardFormat.allCases, id: \.self) { fmt in
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { format = fmt }
+                        } label: {
+                            Text(fmt.title)
+                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                .padding(.horizontal, 18)
+                                .padding(.vertical, 7)
+                                .background(format == fmt ? Color.white.opacity(0.15) : Color.white.opacity(0.05))
+                                .foregroundColor(format == fmt ? .white : .white.opacity(0.4))
+                                .clipShape(Capsule())
+                                .overlay(
+                                    format == fmt
+                                    ? Capsule().stroke(Color.white.opacity(0.2), lineWidth: 1)
+                                    : nil
+                                )
+                        }
+                    }
+                }
+                .padding(.bottom, 10)
+
+                // Background label
+                Text("BACKGROUND")
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .foregroundColor(.white.opacity(0.3))
+                    .tracking(1)
+                    .padding(.bottom, 6)
+
+                // Background picker
+                HStack(spacing: 12) {
+                    ForEach(ShareCardBackground.allCases, id: \.self) { bg in
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { background = bg }
+                        } label: {
+                            backgroundThumbnail(bg)
+                        }
+                    }
+                }
+                .padding(.bottom, 12)
+
+                // Card preview (centered, fills remaining space)
+                cardPreview
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 20)
+
+                Spacer(minLength: 12)
+
+                // Action buttons — 4 squares side by side
+                actionButtons
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 28)
+            }
+
+            // Toast overlay
+            if let message = toastMessage {
+                VStack {
+                    Spacer()
+                    Text(message)
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(Color.black.opacity(0.8))
+                        .clipShape(Capsule())
+                        .padding(.bottom, 100)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .zIndex(1)
             }
         }
         .presentationDragIndicator(.visible)
@@ -176,26 +134,120 @@ struct ShareSheetView: View {
     // MARK: - Card Preview
 
     private var cardPreview: some View {
-        let previewWidth: CGFloat = 280
-        let scale = previewWidth / format.pointSize.width
+        GeometryReader { geo in
+            let maxWidth = geo.size.width
+            let maxHeight = geo.size.height
+            let cardAspect = format.pointSize.width / format.pointSize.height
+            let fitWidth = min(maxWidth, maxHeight * cardAspect)
+            let fitHeight = fitWidth / cardAspect
+            let scale = fitWidth / format.pointSize.width
 
-        return renderer.cardView(
-            type: cardType,
-            data: data,
-            format: format,
-            background: background
-        )
-        .scaleEffect(scale, anchor: .topLeading)
-        .frame(
-            width: format.pointSize.width * scale,
-            height: format.pointSize.height * scale
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-        )
-        .shadow(color: .black.opacity(0.4), radius: 16, y: 6)
+            ZStack {
+                // Checkerboard behind card when transparent
+                if background == .transparent {
+                    checkerboard
+                        .frame(width: fitWidth, height: fitHeight)
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
+
+                renderer.cardView(
+                    type: cardType,
+                    data: data,
+                    format: format,
+                    background: background
+                )
+                .scaleEffect(scale)
+                .frame(width: fitWidth, height: fitHeight)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.3), radius: 12, y: 4)
+            }
+            .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        }
+    }
+
+    // MARK: - Action Buttons
+
+    private var actionButtons: some View {
+        HStack(spacing: 12) {
+            // Instagram Story
+            actionButton(
+                icon: "camera.fill",
+                label: "Instagram",
+                gradient: [
+                    Color(red: 0.93, green: 0.27, blue: 0.47),
+                    Color(red: 0.6, green: 0.2, blue: 0.8)
+                ]
+            ) {
+                shareToInstagramStory()
+            }
+
+            // Save to Photos
+            actionButton(
+                icon: "arrow.down.to.line",
+                label: "Save",
+                gradient: nil
+            ) {
+                saveToPhotos()
+            }
+
+            // Copy to Clipboard
+            actionButton(
+                icon: "doc.on.doc",
+                label: "Copy",
+                gradient: nil
+            ) {
+                copyToClipboard()
+            }
+
+            // Share
+            actionButton(
+                icon: "square.and.arrow.up",
+                label: "Share",
+                gradient: nil
+            ) {
+                shareGeneral()
+            }
+        }
+        .frame(height: 72)
+    }
+
+    @ViewBuilder
+    private func actionButton(
+        icon: String,
+        label: String,
+        gradient: [Color]?,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.system(size: 18, weight: .semibold))
+                Text(label)
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                Group {
+                    if let colors = gradient {
+                        LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+                    } else {
+                        Color.white.opacity(0.08)
+                    }
+                }
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .overlay(
+                gradient == nil
+                ? RoundedRectangle(cornerRadius: 14).stroke(Color.white.opacity(0.1), lineWidth: 1)
+                : nil
+            )
+        }
     }
 
     // MARK: - Background Thumbnail
@@ -204,7 +256,7 @@ struct ShareSheetView: View {
     private func backgroundThumbnail(_ bg: ShareCardBackground) -> some View {
         let isSelected = background == bg
 
-        VStack(spacing: 4) {
+        VStack(spacing: 3) {
             ZStack {
                 if bg == .transparent {
                     checkerboard
@@ -212,7 +264,7 @@ struct ShareSheetView: View {
                     ShareCardBackgroundView(background: bg, format: .square)
                 }
             }
-            .frame(width: 48, height: 48)
+            .frame(width: 44, height: 44)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
@@ -223,7 +275,7 @@ struct ShareSheetView: View {
             )
 
             Text(bg.title)
-                .font(.system(size: 10, weight: .medium, design: .rounded))
+                .font(.system(size: 9, weight: .medium, design: .rounded))
                 .foregroundColor(isSelected ? .white : .white.opacity(0.4))
         }
     }
@@ -254,38 +306,51 @@ struct ShareSheetView: View {
 
     // MARK: - Actions
 
-    private func shareToInstagramStory() {
-        if background == .transparent {
-            // Transparent = sticker mode (user picks their own background in IG)
-            guard let sticker = renderer.renderImage(
-                cardType: cardType,
-                data: data,
-                format: format,
-                background: .transparent
-            ) else { return }
-
-            destinationManager.shareStickerToInstagramStory(stickerImage: sticker)
-        } else {
-            // Opaque = full background image
-            guard let image = renderer.renderImage(
-                cardType: cardType,
-                data: data,
-                format: format,
-                background: background
-            ) else { return }
-
-            destinationManager.shareBackgroundToInstagramStory(backgroundImage: image)
-        }
-    }
-
-    private func shareGeneral() {
-        guard let image = renderer.renderImage(
+    private func renderCurrentCard() -> UIImage? {
+        renderer.renderImage(
             cardType: cardType,
             data: data,
             format: format,
             background: background
-        ) else { return }
+        )
+    }
 
+    private func shareToInstagramStory() {
+        if background == .transparent {
+            guard let sticker = renderCurrentCard() else { return }
+            destinationManager.shareStickerToInstagramStory(stickerImage: sticker)
+        } else {
+            guard let image = renderCurrentCard() else { return }
+            destinationManager.shareBackgroundToInstagramStory(backgroundImage: image)
+        }
+    }
+
+    private func saveToPhotos() {
+        guard let image = renderCurrentCard() else { return }
+        destinationManager.saveToPhotos(image: image) { success in
+            if success { showToast("Saved to Photos") }
+        }
+    }
+
+    private func copyToClipboard() {
+        guard let image = renderCurrentCard() else { return }
+        destinationManager.copyToClipboard(image: image)
+        showToast("Copied to Clipboard")
+    }
+
+    private func shareGeneral() {
+        guard let image = renderCurrentCard() else { return }
         destinationManager.presentShareSheet(image: image)
+    }
+
+    private func showToast(_ message: String) {
+        withAnimation(.easeInOut(duration: 0.25)) {
+            toastMessage = message
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                toastMessage = nil
+            }
+        }
     }
 }

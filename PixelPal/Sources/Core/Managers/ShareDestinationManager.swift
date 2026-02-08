@@ -1,4 +1,5 @@
 import UIKit
+import Photos
 
 @MainActor
 final class ShareDestinationManager {
@@ -12,7 +13,6 @@ final class ShareDestinationManager {
 
     // MARK: - Instagram Story Sticker
 
-    /// Shares a transparent PNG as a draggable/resizable sticker on Instagram Stories.
     func shareStickerToInstagramStory(
         stickerImage: UIImage,
         topColor: String = "#0A0A1F",
@@ -36,7 +36,6 @@ final class ShareDestinationManager {
         UIApplication.shared.open(url)
     }
 
-    /// Shares a full-screen background image to Instagram Stories.
     func shareBackgroundToInstagramStory(backgroundImage: UIImage) {
         guard let url = URL(string: "instagram-stories://share?source_application=\(Self.facebookAppID)"),
               UIApplication.shared.canOpenURL(url) else { return }
@@ -52,6 +51,26 @@ final class ShareDestinationManager {
         ])
 
         UIApplication.shared.open(url)
+    }
+
+    // MARK: - Copy to Clipboard
+
+    func copyToClipboard(image: UIImage) {
+        UIPasteboard.general.image = image
+    }
+
+    // MARK: - Save to Photos
+
+    func saveToPhotos(image: UIImage, completion: @escaping (Bool) -> Void) {
+        PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+            guard status == .authorized || status == .limited else {
+                DispatchQueue.main.async { completion(false) }
+                return
+            }
+
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            DispatchQueue.main.async { completion(true) }
+        }
     }
 
     // MARK: - General Share Sheet

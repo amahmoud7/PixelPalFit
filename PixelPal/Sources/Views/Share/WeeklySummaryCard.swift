@@ -47,7 +47,7 @@ struct WeeklySummaryCard: View {
                 // Weekly header
                 Text("Weekly Recap")
                     .font(.system(size: 14, weight: .bold, design: .rounded))
-                    .foregroundColor(.white.opacity(0.7))
+                    .foregroundColor(.white)
 
                 Spacer().frame(height: format == .story ? 8 : 4)
 
@@ -59,7 +59,7 @@ struct WeeklySummaryCard: View {
 
                 Text("steps this week")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.5))
+                    .foregroundColor(.white.opacity(0.75))
 
                 Spacer().frame(height: format == .story ? 14 : 8)
 
@@ -74,11 +74,11 @@ struct WeeklySummaryCard: View {
                     HStack {
                         Text("\(weeklyPercent)%")
                             .font(.system(size: 9, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.45))
+                            .foregroundColor(.white.opacity(0.7))
                         Spacer()
                         Text("\(data.weeklySteps.formatted()) / \(data.weeklyPhaseThreshold.formatted())")
                             .font(.system(size: 9, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.45))
+                            .foregroundColor(.white.opacity(0.7))
                     }
                 }
                 .padding(.horizontal, 24)
@@ -99,7 +99,7 @@ struct WeeklySummaryCard: View {
                 // Daily average
                 Text("\(dailyAverage.formatted()) avg/day")
                     .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(.white.opacity(0.6))
 
                 Spacer().frame(height: format == .story ? 6 : 4)
 
@@ -112,6 +112,7 @@ struct WeeklySummaryCard: View {
 
                 WatermarkView()
             }
+            .shadow(color: background == .transparent ? .black.opacity(0.9) : .clear, radius: 4)
         }
         .frame(width: format.pointSize.width, height: format.pointSize.height)
     }
