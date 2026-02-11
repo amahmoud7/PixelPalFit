@@ -4,7 +4,7 @@ import WidgetKit
 
 struct PixelPalLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: PixelPalAttributes.self) { context in
+        ActivityConfiguration(for: PixelStepperAttributes.self) { context in
             LockScreenView(context: context)
         } dynamicIsland: { context in
             DynamicIsland {
@@ -119,7 +119,7 @@ private let dailyGoal: Double = 7500.0
 // Export: char (14,16) 50x56, steps (76,22) 100x20, stateInfo (76,48) 180x14
 
 private struct LockScreenView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     var body: some View {
         HStack(spacing: 12) {
@@ -169,7 +169,7 @@ private struct LockScreenView: View {
 // MARK: - Compact Views — "Steps Forward"
 
 private struct CompactLeadingView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     var body: some View {
         AnimatedSpriteView(
@@ -182,7 +182,7 @@ private struct CompactLeadingView: View {
 }
 
 private struct CompactTrailingView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     var body: some View {
         if let milestone = context.state.milestoneText {
@@ -207,7 +207,7 @@ private struct CompactTrailingView: View {
 // MARK: - Minimal View — "Progress Arc"
 
 private struct MinimalView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     private var goalProgress: Double {
         min(Double(context.state.steps) / dailyGoal, 1.0)
@@ -253,7 +253,7 @@ private struct MinimalView: View {
 
 // Leading: 40x48 character with badge overlaid
 private struct ExpandedLeadingView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -285,7 +285,7 @@ private struct ExpandedLeadingView: View {
 
 // Trailing: 70x36 step count — font 20pt + "steps" 8pt
 private struct ExpandedTrailingView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
@@ -308,7 +308,7 @@ private struct ExpandedTrailingView: View {
 
 // Center: 128x14 phase info
 private struct ExpandedCenterView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     var body: some View {
         HStack(spacing: 3) {
@@ -324,7 +324,7 @@ private struct ExpandedCenterView: View {
 
 // Bottom: bar → 6px → labels → 2px → dots → 0px → divider
 private struct ExpandedBottomView: View {
-    let context: ActivityViewContext<PixelPalAttributes>
+    let context: ActivityViewContext<PixelStepperAttributes>
 
     private var goalProgress: Double {
         min(Double(context.state.steps) / dailyGoal, 1.0)

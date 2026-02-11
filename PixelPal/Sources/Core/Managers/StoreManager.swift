@@ -200,6 +200,34 @@ class StoreManager: ObservableObject {
     var yearlyPriceString: String {
         yearlyProduct?.displayPrice ?? "$19.99/year"
     }
+
+    /// Whether the user is eligible for a free trial on a given product.
+    func isTrialEligible(for product: Product) async -> Bool {
+        guard let subscription = product.subscription else { return false }
+        let status = await subscription.isEligibleForIntroOffer
+        return status
+    }
+
+    /// Gets the trial period description (e.g. "7 days free") for a product.
+    func trialDescription(for product: Product) -> String? {
+        guard let subscription = product.subscription,
+              let introOffer = subscription.introductoryOffer,
+              introOffer.paymentMode == .freeTrial else { return nil }
+
+        let period = introOffer.period
+        switch period.unit {
+        case .day:
+            return "\(period.value) day\(period.value > 1 ? "s" : "") free"
+        case .week:
+            return "\(period.value) week\(period.value > 1 ? "s" : "") free"
+        case .month:
+            return "\(period.value) month\(period.value > 1 ? "s" : "") free"
+        case .year:
+            return "\(period.value) year\(period.value > 1 ? "s" : "") free"
+        @unknown default:
+            return "Free trial"
+        }
+    }
 }
 
 // MARK: - Errors

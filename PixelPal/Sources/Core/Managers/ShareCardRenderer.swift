@@ -20,6 +20,32 @@ final class ShareCardRenderer {
         return renderer.uiImage
     }
 
+    // MARK: - Animated GIF
+
+    func renderGIFData(
+        cardType: ShareCardType,
+        data: ShareCardData,
+        format: ShareCardFormat,
+        background: ShareCardBackground
+    ) -> Data? {
+        guard let frame1 = renderImage(cardType: cardType, data: data, format: format, background: background, spriteFrame: 1),
+              let frame2 = renderImage(cardType: cardType, data: data, format: format, background: background, spriteFrame: 2) else { return nil }
+        return AnimatedImageEncoder.encodeGIF(frames: [frame1, frame2])
+    }
+
+    // MARK: - Animated PNG (APNG)
+
+    func renderAPNGData(
+        cardType: ShareCardType,
+        data: ShareCardData,
+        format: ShareCardFormat,
+        background: ShareCardBackground
+    ) -> Data? {
+        guard let frame1 = renderImage(cardType: cardType, data: data, format: format, background: background, spriteFrame: 1),
+              let frame2 = renderImage(cardType: cardType, data: data, format: format, background: background, spriteFrame: 2) else { return nil }
+        return AnimatedImageEncoder.encodeAPNG(frames: [frame1, frame2])
+    }
+
     // MARK: - Video Rendering
 
     func renderVideo(
@@ -29,32 +55,24 @@ final class ShareCardRenderer {
         background: ShareCardBackground,
         completion: @escaping (URL?) -> Void
     ) {
-        // Generate frames alternating sprite frames 1 and 2
-        let fps = 4
-        let duration: Double = 2.4
-        let totalFrames = Int(Double(fps) * duration)
+        // Render 2 unique frames on main thread, extract CGImages immediately
+        guard let cg1 = renderImage(cardType: cardType, data: data, format: format, background: background, spriteFrame: 1)?.cgImage,
+              let cg2 = renderImage(cardType: cardType, data: data, format: format, background: background, spriteFrame: 2)?.cgImage else {
+            completion(nil)
+            return
+        }
 
-        var frames: [UIImage] = []
-        for i in 0..<totalFrames {
-            let spriteFrame = (i % 2) + 1
-            guard let image = renderImage(
-                cardType: cardType,
-                data: data,
-                format: format,
-                background: background,
-                spriteFrame: spriteFrame
-            ) else {
-                completion(nil)
-                return
-            }
-            frames.append(image)
+        // Build alternating CGImage array (thread-safe, no UIImage on background)
+        var cgFrames: [CGImage] = []
+        for i in 0..<10 {
+            cgFrames.append(i % 2 == 0 ? cg1 : cg2)
         }
 
         let outputURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent("pixelpal_share_\(UUID().uuidString).mp4")
+            .appendingPathComponent("pixelstepper_share_\(UUID().uuidString).mp4")
 
         let size = format.pixelSize
-        composeVideo(frames: frames, outputURL: outputURL, size: size, fps: fps) { success in
+        Self.composeVideo(cgFrames: cgFrames, outputURL: outputURL, size: size, fps: 4) { success in
             DispatchQueue.main.async {
                 completion(success ? outputURL : nil)
             }
@@ -78,77 +96,74 @@ final class ShareCardRenderer {
             EvolutionMilestoneCard(data: data, format: format, background: background, spriteFrame: spriteFrame)
         case .weeklySummary:
             WeeklySummaryCard(data: data, format: format, background: background, spriteFrame: spriteFrame)
+        case .streak:
+            StreakShareCard(data: data, format: format, background: background, spriteFrame: spriteFrame)
         }
     }
 
-    // MARK: - Video Composition
+    // MARK: - Video Composition (static — no self capture, no UIImage on background thread)
 
-    private func composeVideo(
-        frames: [UIImage],
+    private static nonisolated func composeVideo(
+        cgFrames: [CGImage],
         outputURL: URL,
         size: CGSize,
         fps: Int,
         completion: @escaping (Bool) -> Void
     ) {
-        // Clean up existing file
-        try? FileManager.default.removeItem(at: outputURL)
+        DispatchQueue(label: "com.pixelstepper.videowriter").async {
+            try? FileManager.default.removeItem(at: outputURL)
 
-        guard let writer = try? AVAssetWriter(outputURL: outputURL, fileType: .mp4) else {
-            completion(false)
-            return
-        }
-
-        let settings: [String: Any] = [
-            AVVideoCodecKey: AVVideoCodecType.h264,
-            AVVideoWidthKey: Int(size.width),
-            AVVideoHeightKey: Int(size.height)
-        ]
-
-        let writerInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
-        let adaptor = AVAssetWriterInputPixelBufferAdaptor(
-            assetWriterInput: writerInput,
-            sourcePixelBufferAttributes: [
-                kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB,
-                kCVPixelBufferWidthKey as String: Int(size.width),
-                kCVPixelBufferHeightKey as String: Int(size.height)
-            ]
-        )
-
-        writer.add(writerInput)
-
-        guard writer.startWriting() else {
-            completion(false)
-            return
-        }
-        writer.startSession(atSourceTime: .zero)
-
-        let frameDuration = CMTime(value: 1, timescale: CMTimeScale(fps))
-
-        writerInput.requestMediaDataWhenReady(on: DispatchQueue(label: "com.pixelpal.videowriter")) {
-            var frameIndex = 0
-
-            while writerInput.isReadyForMoreMediaData && frameIndex < frames.count {
-                let presentationTime = CMTimeMultiply(frameDuration, multiplier: Int32(frameIndex))
-
-                guard let pixelBuffer = self.pixelBuffer(from: frames[frameIndex], size: size) else {
-                    frameIndex += 1
-                    continue
-                }
-
-                adaptor.append(pixelBuffer, withPresentationTime: presentationTime)
-                frameIndex += 1
+            guard let writer = try? AVAssetWriter(outputURL: outputURL, fileType: .mp4) else {
+                completion(false)
+                return
             }
 
-            if frameIndex >= frames.count {
-                writerInput.markAsFinished()
-                writer.finishWriting {
-                    completion(writer.status == .completed)
+            let settings: [String: Any] = [
+                AVVideoCodecKey: AVVideoCodecType.h264,
+                AVVideoWidthKey: Int(size.width),
+                AVVideoHeightKey: Int(size.height)
+            ]
+
+            let writerInput = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
+            writerInput.expectsMediaDataInRealTime = false
+
+            let adaptor = AVAssetWriterInputPixelBufferAdaptor(
+                assetWriterInput: writerInput,
+                sourcePixelBufferAttributes: [
+                    kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB,
+                    kCVPixelBufferWidthKey as String: Int(size.width),
+                    kCVPixelBufferHeightKey as String: Int(size.height)
+                ]
+            )
+
+            writer.add(writerInput)
+
+            guard writer.startWriting() else {
+                completion(false)
+                return
+            }
+            writer.startSession(atSourceTime: .zero)
+
+            let frameDuration = CMTime(value: 1, timescale: CMTimeScale(fps))
+
+            for (i, cgImage) in cgFrames.enumerated() {
+                while !writerInput.isReadyForMoreMediaData {
+                    Thread.sleep(forTimeInterval: 0.01)
                 }
+
+                let presentationTime = CMTimeMultiply(frameDuration, multiplier: Int32(i))
+                guard let pixelBuffer = pixelBuffer(from: cgImage, size: size) else { continue }
+                adaptor.append(pixelBuffer, withPresentationTime: presentationTime)
+            }
+
+            writerInput.markAsFinished()
+            writer.finishWriting {
+                completion(writer.status == .completed)
             }
         }
     }
 
-    private nonisolated func pixelBuffer(from image: UIImage, size: CGSize) -> CVPixelBuffer? {
+    private static nonisolated func pixelBuffer(from cgImage: CGImage, size: CGSize) -> CVPixelBuffer? {
         let attrs: [String: Any] = [
             kCVPixelBufferCGImageCompatibilityKey as String: true,
             kCVPixelBufferCGBitmapContextCompatibilityKey as String: true
@@ -178,8 +193,6 @@ final class ShareCardRenderer {
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue
         ) else { return nil }
-
-        guard let cgImage = image.cgImage else { return nil }
 
         context.draw(cgImage, in: CGRect(origin: .zero, size: size))
         return buffer

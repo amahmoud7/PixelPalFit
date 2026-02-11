@@ -6,12 +6,14 @@ enum ShareCardType: String, CaseIterable {
     case dailyProgress
     case evolutionMilestone
     case weeklySummary
+    case streak
 
     var title: String {
         switch self {
         case .dailyProgress: return "Daily"
         case .evolutionMilestone: return "Evolution"
         case .weeklySummary: return "Weekly"
+        case .streak: return "Streak"
         }
     }
 
@@ -20,6 +22,7 @@ enum ShareCardType: String, CaseIterable {
         case .dailyProgress: return "figure.walk"
         case .evolutionMilestone: return "sparkles"
         case .weeklySummary: return "chart.bar.fill"
+        case .streak: return "flame.fill"
         }
     }
 }
@@ -74,6 +77,14 @@ enum ShareCardBackground: String, CaseIterable {
     }
 
     var isTransparent: Bool { self == .transparent }
+
+    /// Dark and Clear are free; Sunset, Ocean, Retro require premium.
+    var requiresPremium: Bool {
+        switch self {
+        case .darkGlow, .transparent: return false
+        case .sunset, .ocean, .retro: return true
+        }
+    }
 }
 
 // MARK: - Share Card Data

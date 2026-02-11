@@ -1,14 +1,14 @@
 import ActivityKit
 import Foundation
 
-/// Manages the Pixel Pal Live Activity lifecycle.
+/// Manages the Pixel Stepper Live Activity lifecycle.
 @MainActor
 class LiveActivityManager: ObservableObject {
     /// Whether a Live Activity is currently running.
     @Published var isActive: Bool = false
 
     /// The current Live Activity instance.
-    private var currentActivity: Activity<PixelPalAttributes>?
+    private var currentActivity: Activity<PixelStepperAttributes>?
 
     /// Previous step count to detect walking.
     private var previousSteps: Int = 0
@@ -43,7 +43,7 @@ class LiveActivityManager: ObservableObject {
 
     /// Checks if there's an existing Live Activity and restores reference to it.
     private func checkForExistingActivity() {
-        if let existing = Activity<PixelPalAttributes>.activities.first {
+        if let existing = Activity<PixelStepperAttributes>.activities.first {
             self.currentActivity = existing
             self.isActive = true
         }
@@ -70,8 +70,8 @@ class LiveActivityManager: ObservableObject {
         // Store current phase
         currentPhase = phase
 
-        let attributes = PixelPalAttributes()
-        let contentState = PixelPalAttributes.ContentState(
+        let attributes = PixelStepperAttributes()
+        let contentState = PixelStepperAttributes.ContentState(
             steps: steps,
             state: state,
             gender: gender,
@@ -83,7 +83,7 @@ class LiveActivityManager: ObservableObject {
         )
 
         do {
-            let activity = try Activity<PixelPalAttributes>.request(
+            let activity = try Activity<PixelStepperAttributes>.request(
                 attributes: attributes,
                 content: .init(state: contentState, staleDate: nil),
                 pushType: nil // No push updates for v1
@@ -138,7 +138,7 @@ class LiveActivityManager: ObservableObject {
             stopWalkingAnimation(steps: steps)
         } else if !isWalking {
             // Normal update (not walking) - idle state, no step count per UI rules
-            let contentState = PixelPalAttributes.ContentState(
+            let contentState = PixelStepperAttributes.ContentState(
                 steps: steps,
                 state: state,
                 gender: gender,
@@ -182,7 +182,7 @@ class LiveActivityManager: ObservableObject {
     private func updateMilestoneDisplay(steps: Int, milestoneText: String) {
         guard let activity = currentActivity else { return }
 
-        let contentState = PixelPalAttributes.ContentState(
+        let contentState = PixelStepperAttributes.ContentState(
             steps: steps,
             state: currentState,
             gender: currentGender,
@@ -208,7 +208,7 @@ class LiveActivityManager: ObservableObject {
 
         guard let activity = currentActivity else { return }
 
-        let contentState = PixelPalAttributes.ContentState(
+        let contentState = PixelStepperAttributes.ContentState(
             steps: steps,
             state: currentState,
             gender: currentGender,
@@ -232,7 +232,7 @@ class LiveActivityManager: ObservableObject {
 
         guard let activity = currentActivity else { return }
 
-        let contentState = PixelPalAttributes.ContentState(
+        let contentState = PixelStepperAttributes.ContentState(
             steps: steps,
             state: currentState,
             gender: currentGender,
@@ -256,7 +256,7 @@ class LiveActivityManager: ObservableObject {
 
         guard let activity = currentActivity else { return }
 
-        let contentState = PixelPalAttributes.ContentState(
+        let contentState = PixelStepperAttributes.ContentState(
             steps: steps,
             state: currentState,
             gender: currentGender,
@@ -293,10 +293,10 @@ class LiveActivityManager: ObservableObject {
         }
     }
 
-    /// Ends all Pixel Pal Live Activities (cleanup utility).
+    /// Ends all Pixel Stepper Live Activities (cleanup utility).
     func endAllActivities() {
         Task {
-            for activity in Activity<PixelPalAttributes>.activities {
+            for activity in Activity<PixelStepperAttributes>.activities {
                 await activity.end(nil, dismissalPolicy: .immediate)
             }
             self.currentActivity = nil

@@ -17,6 +17,9 @@ class PersistenceManager: ObservableObject {
     /// Published entitlements.
     @Published var entitlements: Entitlements
 
+    /// Published cosmetic inventory.
+    @Published var cosmeticInventory: CosmeticInventory
+
     /// File names for persistence.
     private enum FileName {
         static let userProfile = "UserProfile.json"
@@ -24,6 +27,7 @@ class PersistenceManager: ObservableObject {
         static let entitlements = "Entitlements.json"
         static let dailyHistory = "DailyHistory.json"
         static let phaseDecayState = "PhaseDecayState.json"
+        static let cosmeticInventory = "CosmeticInventory.json"
     }
 
     /// Application Support directory for this app.
@@ -44,6 +48,7 @@ class PersistenceManager: ObservableObject {
         self.userProfile = Self.load(FileName.userProfile, as: UserProfile.self)
         self.progressState = Self.load(FileName.progressState, as: ProgressState.self) ?? ProgressState.createNew()
         self.entitlements = Self.load(FileName.entitlements, as: Entitlements.self) ?? Entitlements.createFree()
+        self.cosmeticInventory = Self.load(FileName.cosmeticInventory, as: CosmeticInventory.self) ?? CosmeticInventory.createEmpty()
 
         // Migrate from legacy SharedData if needed
         migrateFromLegacyIfNeeded()
@@ -69,6 +74,12 @@ class PersistenceManager: ObservableObject {
         save(entitlements, to: FileName.entitlements)
     }
 
+    /// Updates and saves cosmetic inventory.
+    func updateCosmetics(_ update: (inout CosmeticInventory) -> Void) {
+        update(&cosmeticInventory)
+        save(cosmeticInventory, to: FileName.cosmeticInventory)
+    }
+
     /// Saves all current state to disk.
     func saveAll() {
         if let profile = userProfile {
@@ -76,6 +87,7 @@ class PersistenceManager: ObservableObject {
         }
         save(progressState, to: FileName.progressState)
         save(entitlements, to: FileName.entitlements)
+        save(cosmeticInventory, to: FileName.cosmeticInventory)
     }
 
     /// Clears all persisted data (for testing/reset).
@@ -83,10 +95,12 @@ class PersistenceManager: ObservableObject {
         userProfile = nil
         progressState = ProgressState.createNew()
         entitlements = Entitlements.createFree()
+        cosmeticInventory = CosmeticInventory.createEmpty()
 
         delete(FileName.userProfile)
         delete(FileName.progressState)
         delete(FileName.entitlements)
+        delete(FileName.cosmeticInventory)
 
         // Also clear legacy data
         SharedData.clearAll()

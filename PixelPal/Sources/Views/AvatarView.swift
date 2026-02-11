@@ -6,6 +6,7 @@ struct AvatarView: View {
     let phase: Int
     var isWalking: Bool = false
     var size: CGFloat = 200
+    var loadout: CosmeticLoadout? = nil
 
     @State private var idleFrame: Int = 1
     @State private var walkingFrame: Int = 1
@@ -45,26 +46,72 @@ struct AvatarView: View {
 
     var body: some View {
         ZStack {
-            // Phase-colored radial glow
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [phaseColor.opacity(0.15), .clear],
-                        center: .center,
-                        startRadius: size * 0.15,
-                        endRadius: size * 0.55
+            // Layer 1: Background (cosmetic or default phase glow)
+            if let bgID = loadout?.background,
+               let item = CosmeticCatalog.item(id: bgID) {
+                Image(item.assetName)
+                    .resizable()
+                    .interpolation(.none)
+                    .frame(width: size * 1.2, height: size * 1.2)
+            } else {
+                // Default phase-colored radial glow
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [phaseColor.opacity(0.15), .clear],
+                            center: .center,
+                            startRadius: size * 0.15,
+                            endRadius: size * 0.55
+                        )
                     )
-                )
-                .frame(width: size * 1.2, height: size * 1.2)
+                    .frame(width: size * 1.2, height: size * 1.2)
+            }
 
-            // Character sprite
-            Image(spriteName)
-                .resizable()
-                .interpolation(.none)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: size, height: size)
-                .scaleEffect(isWalking ? 1.0 : breathScale)
-                .offset(y: isWalking ? 0 : bobOffset)
+            // Layer 2: Character sprite (skin replaces entire character)
+            if let skinID = loadout?.skin,
+               let skinItem = CosmeticCatalog.item(id: skinID) {
+                // Full skin replacement — no hat/accessory overlays
+                Image(skinItem.assetName)
+                    .resizable()
+                    .interpolation(.none)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: size, height: size)
+                    .scaleEffect(isWalking ? 1.0 : breathScale)
+                    .offset(y: isWalking ? 0 : bobOffset)
+            } else {
+                // Default character sprite + overlays
+                Image(spriteName)
+                    .resizable()
+                    .interpolation(.none)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: size, height: size)
+                    .scaleEffect(isWalking ? 1.0 : breathScale)
+                    .offset(y: isWalking ? 0 : bobOffset)
+
+                // Layer 3: Hat overlay
+                if let hatID = loadout?.hat,
+                   let item = CosmeticCatalog.item(id: hatID) {
+                    Image(item.assetName)
+                        .resizable()
+                        .interpolation(.none)
+                        .frame(width: size * 0.6, height: size * 0.6)
+                        .offset(y: -size * 0.3)
+                        .scaleEffect(isWalking ? 1.0 : breathScale)
+                        .offset(y: isWalking ? 0 : bobOffset)
+                }
+
+                // Layer 4: Accessory overlay
+                if let accID = loadout?.accessory,
+                   let item = CosmeticCatalog.item(id: accID) {
+                    Image(item.assetName)
+                        .resizable()
+                        .interpolation(.none)
+                        .frame(width: size * 0.5, height: size * 0.5)
+                        .offset(x: size * 0.25)
+                        .scaleEffect(isWalking ? 1.0 : breathScale)
+                        .offset(y: isWalking ? 0 : bobOffset)
+                }
+            }
         }
         .scaleEffect(appeared ? 1.0 : 0.5)
         .opacity(appeared ? 1.0 : 0)

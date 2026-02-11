@@ -7,6 +7,8 @@ struct ShareSheetView: View {
     @State private var format: ShareCardFormat = .story
     @State private var background: ShareCardBackground = .darkGlow
     @State private var toastMessage: String?
+    @State private var spriteFrame: Int = 1
+    @State private var showPaywall: Bool = false
 
     @Environment(\.dismiss) private var dismiss
 
@@ -21,7 +23,7 @@ struct ShareSheetView: View {
             VStack(spacing: 0) {
                 // Header
                 VStack(spacing: 4) {
-                    Text("Share My Pixel Pace Stats")
+                    Text("Share My Pixel Stepper Stats")
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
 
@@ -89,7 +91,11 @@ struct ShareSheetView: View {
                 HStack(spacing: 12) {
                     ForEach(ShareCardBackground.allCases, id: \.self) { bg in
                         Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { background = bg }
+                            if bg.requiresPremium && !data.isPremium {
+                                showPaywall = true
+                            } else {
+                                withAnimation(.easeInOut(duration: 0.2)) { background = bg }
+                            }
                         } label: {
                             backgroundThumbnail(bg)
                         }
@@ -129,6 +135,15 @@ struct ShareSheetView: View {
         }
         .presentationDragIndicator(.visible)
         .preferredColorScheme(.dark)
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(storeManager: StoreManager.shared, gender: data.gender, currentPhase: data.currentPhase)
+        }
+        .task {
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 600_000_000)
+                spriteFrame = spriteFrame == 1 ? 2 : 1
+            }
+        }
     }
 
     // MARK: - Card Preview
@@ -154,7 +169,8 @@ struct ShareSheetView: View {
                     type: cardType,
                     data: data,
                     format: format,
-                    background: background
+                    background: background,
+                    spriteFrame: spriteFrame
                 )
                 .scaleEffect(scale)
                 .frame(width: fitWidth, height: fitHeight)
@@ -186,10 +202,10 @@ struct ShareSheetView: View {
                 shareToInstagramStory()
             }
 
-            // Save to Photos
+            // Save GIF (Photos + Files)
             actionButton(
                 icon: "arrow.down.to.line",
-                label: "Save",
+                label: "Save GIF",
                 gradient: nil
             ) {
                 saveToPhotos()
@@ -255,6 +271,7 @@ struct ShareSheetView: View {
     @ViewBuilder
     private func backgroundThumbnail(_ bg: ShareCardBackground) -> some View {
         let isSelected = background == bg
+        let isLocked = bg.requiresPremium && !data.isPremium
 
         VStack(spacing: 3) {
             ZStack {
@@ -262,6 +279,13 @@ struct ShareSheetView: View {
                     checkerboard
                 } else {
                     ShareCardBackgroundView(background: bg, format: .square)
+                }
+
+                if isLocked {
+                    Color.black.opacity(0.5)
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(.white.opacity(0.8))
                 }
             }
             .frame(width: 44, height: 44)
@@ -311,14 +335,35 @@ struct ShareSheetView: View {
             cardType: cardType,
             data: data,
             format: format,
+            background: background,
+            spriteFrame: spriteFrame
+        )
+    }
+
+    private func renderGIF() -> Data? {
+        renderer.renderGIFData(
+            cardType: cardType,
+            data: data,
+            format: format,
             background: background
         )
     }
 
     private func shareToInstagramStory() {
+        guard destinationManager.isInstagramAvailable else {
+            showToast("Instagram not installed")
+            return
+        }
+
         if background == .transparent {
-            guard let sticker = renderCurrentCard() else { return }
-            destinationManager.shareStickerToInstagramStory(stickerImage: sticker)
+            if let apngData = renderer.renderAPNGData(
+                cardType: cardType,
+                data: data,
+                format: format,
+                background: background
+            ) {
+                destinationManager.shareAPNGStickerToInstagramStory(apngData: apngData)
+            }
         } else {
             guard let image = renderCurrentCard() else { return }
             destinationManager.shareBackgroundToInstagramStory(backgroundImage: image)
@@ -326,10 +371,13 @@ struct ShareSheetView: View {
     }
 
     private func saveToPhotos() {
-        guard let image = renderCurrentCard() else { return }
-        destinationManager.saveToPhotos(image: image) { success in
+        guard let gifData = renderGIF() else { return }
+        // Save to Photos
+        destinationManager.saveGIFToPhotos(data: gifData) { success in
             if success { showToast("Saved to Photos") }
         }
+        // Also save to Files via share sheet so user can access GIF for Instagram
+        destinationManager.saveGIFToFiles(data: gifData)
     }
 
     private func copyToClipboard() {

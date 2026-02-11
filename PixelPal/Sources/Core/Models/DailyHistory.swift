@@ -134,6 +134,62 @@ struct DailyHistory: Codable, Equatable {
     func wasGoalMet(on date: Date) -> Bool {
         return state(for: date)?.isGoalMet ?? false
     }
+
+    /// Counts consecutive days with goal met, ending at yesterday (today is still in progress).
+    func countConsecutiveGoalsMet() -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        var streak = 0
+
+        // Start from yesterday and walk backward
+        for dayOffset in stride(from: -1, through: -Self.maxDays, by: -1) {
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: today) else { break }
+
+            if let day = state(for: date), day.isGoalMet {
+                streak += 1
+            } else {
+                break
+            }
+        }
+
+        // Also count today if goal already met
+        if let todayState = state(for: today), todayState.isGoalMet {
+            streak += 1
+        }
+
+        return streak
+    }
+
+    /// Counts consecutive days with goal met, allowing one missed day to be "frozen."
+    /// Returns the streak count and the date that was frozen (if any).
+    func countConsecutiveGoalsMetWithFreeze() -> (streak: Int, frozenDate: Date?) {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        var streak = 0
+        var frozenDate: Date?
+
+        // Start from yesterday and walk backward
+        for dayOffset in stride(from: -1, through: -Self.maxDays, by: -1) {
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: today) else { break }
+
+            if let day = state(for: date), day.isGoalMet {
+                streak += 1
+            } else if frozenDate == nil {
+                // Use streak freeze on this missed day
+                frozenDate = date
+                streak += 1
+            } else {
+                break
+            }
+        }
+
+        // Also count today if goal already met
+        if let todayState = state(for: today), todayState.isGoalMet {
+            streak += 1
+        }
+
+        return (streak, frozenDate)
+    }
 }
 
 // MARK: - Week View Helpers

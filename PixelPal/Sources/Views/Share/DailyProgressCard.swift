@@ -49,7 +49,7 @@ struct DailyProgressCard: View {
 
                 Text("steps today")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.75))
+                    .foregroundColor(.white)
 
                 Spacer().frame(height: format == .story ? 16 : 10)
 
@@ -64,11 +64,11 @@ struct DailyProgressCard: View {
                     HStack {
                         Text("\(progressPercent)%")
                             .font(.system(size: 9, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(.white)
                         Spacer()
                         Text("\(data.todaySteps.formatted()) / \(ShareCardData.dailyGoal.formatted())")
                             .font(.system(size: 9, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(.white)
                     }
                 }
                 .padding(.horizontal, 24)

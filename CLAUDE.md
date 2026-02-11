@@ -83,10 +83,10 @@ When uncertain, pick the simplest, most reviewer-proof approach.
 xcodegen generate
 
 # Build (no code signing for CI/automation)
-xcodebuild -project PixelPal.xcodeproj -scheme PixelPal -destination 'generic/platform=iOS' build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+xcodebuild -project PixelStepper.xcodeproj -scheme PixelPal -destination 'generic/platform=iOS' build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
 # Run tests
-xcodebuild test -project PixelPal.xcodeproj -scheme PixelPal -destination 'platform=iOS Simulator,name=iPhone 16'
+xcodebuild test -project PixelStepper.xcodeproj -scheme PixelPal -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
 
 ## File Organization

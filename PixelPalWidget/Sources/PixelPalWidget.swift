@@ -12,7 +12,11 @@ struct Provider: TimelineProvider {
         phase: 1,
         steps: 4231,
         cumulativeSteps: 4231,
-        weekData: [6200, 8100, 3400, 7800, 5100, 9200, 4231]
+        weekData: [6200, 8100, 3400, 7800, 5100, 9200, 4231],
+        cosmeticBackground: nil,
+        cosmeticHat: nil,
+        cosmeticAccessory: nil,
+        cosmeticSkin: nil
     )
 
     func placeholder(in context: Context) -> SimpleEntry {
@@ -44,6 +48,7 @@ struct Provider: TimelineProvider {
         let steps = SharedData.loadSteps()
         let cumulativeSteps = SharedData.loadCumulativeSteps()
         let weekData = SharedData.loadWeekData()
+        let cosmetics = SharedData.loadEquippedCosmetics()
 
         return SimpleEntry(
             date: date,
@@ -52,7 +57,11 @@ struct Provider: TimelineProvider {
             phase: max(1, phase),
             steps: steps,
             cumulativeSteps: cumulativeSteps,
-            weekData: weekData.isEmpty ? [0, 0, 0, 0, 0, 0, 0] : weekData
+            weekData: weekData.isEmpty ? [0, 0, 0, 0, 0, 0, 0] : weekData,
+            cosmeticBackground: cosmetics.background,
+            cosmeticHat: cosmetics.hat,
+            cosmeticAccessory: cosmetics.accessory,
+            cosmeticSkin: cosmetics.skin
         )
     }
 }
@@ -67,6 +76,10 @@ struct SimpleEntry: TimelineEntry {
     let steps: Int
     let cumulativeSteps: Int
     let weekData: [Int]
+    let cosmeticBackground: String?
+    let cosmeticHat: String?
+    let cosmeticAccessory: String?
+    let cosmeticSkin: String?
 }
 
 // MARK: - Color & Phase Helpers
@@ -128,11 +141,49 @@ struct PixelPalSmallWidgetView: View {
         )
 
         VStack(spacing: 0) {
-            Image(spriteName)
-                .resizable()
-                .interpolation(.none)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 80, height: 80)
+            ZStack {
+                if let skinAsset = entry.cosmeticSkin {
+                    // Full skin replacement
+                    Image(skinAsset)
+                        .resizable()
+                        .interpolation(.none)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80)
+                } else {
+                    // Cosmetic background or default
+                    if let bgAsset = entry.cosmeticBackground {
+                        Image(bgAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .frame(width: 80, height: 80)
+                    }
+
+                    Image(spriteName)
+                        .resizable()
+                        .interpolation(.none)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80)
+
+                    // Cosmetic hat
+                    if let hatAsset = entry.cosmeticHat {
+                        Image(hatAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .frame(width: 48, height: 48)
+                            .offset(y: -24)
+                    }
+
+                    // Cosmetic accessory
+                    if let accAsset = entry.cosmeticAccessory {
+                        Image(accAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .frame(width: 40, height: 40)
+                            .offset(x: 20)
+                    }
+                }
+            }
+            .frame(width: 80, height: 80)
 
             Spacer().frame(height: 6)
 
@@ -189,18 +240,53 @@ struct PixelPalMediumWidgetView: View {
         )
 
         HStack(spacing: 16) {
-            // Left: Character with glow + badge overlay
+            // Left: Character with glow + cosmetics + badge overlay
             ZStack(alignment: .bottom) {
                 ZStack {
-                    Circle()
-                        .fill(widgetStateColor(for: entry.state).opacity(0.25))
-                        .frame(width: 68, height: 68)
+                    if let skinAsset = entry.cosmeticSkin {
+                        // Full skin replacement
+                        Image(skinAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 52, height: 52)
+                    } else {
+                        // Cosmetic background or default glow
+                        if let bgAsset = entry.cosmeticBackground {
+                            Image(bgAsset)
+                                .resizable()
+                                .interpolation(.none)
+                                .frame(width: 68, height: 68)
+                        } else {
+                            Circle()
+                                .fill(widgetStateColor(for: entry.state).opacity(0.25))
+                                .frame(width: 68, height: 68)
+                        }
 
-                    Image(spriteName)
-                        .resizable()
-                        .interpolation(.none)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 52, height: 52)
+                        Image(spriteName)
+                            .resizable()
+                            .interpolation(.none)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 52, height: 52)
+
+                        // Cosmetic hat
+                        if let hatAsset = entry.cosmeticHat {
+                            Image(hatAsset)
+                                .resizable()
+                                .interpolation(.none)
+                                .frame(width: 32, height: 32)
+                                .offset(y: -16)
+                        }
+
+                        // Cosmetic accessory
+                        if let accAsset = entry.cosmeticAccessory {
+                            Image(accAsset)
+                                .resizable()
+                                .interpolation(.none)
+                                .frame(width: 26, height: 26)
+                                .offset(x: 13)
+                        }
+                    }
                 }
 
                 Text(entry.state.rawValue.capitalized)
@@ -319,15 +405,50 @@ struct PixelPalLargeWidgetView: View {
         VStack(spacing: 0) {
             // Character — 100x100
             ZStack {
-                Circle()
-                    .fill(widgetPhaseColor(for: entry.phase).opacity(0.25))
-                    .frame(width: 94, height: 94)
+                if let skinAsset = entry.cosmeticSkin {
+                    // Full skin replacement
+                    Image(skinAsset)
+                        .resizable()
+                        .interpolation(.none)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80)
+                } else {
+                    // Cosmetic background or default glow
+                    if let bgAsset = entry.cosmeticBackground {
+                        Image(bgAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .frame(width: 94, height: 94)
+                    } else {
+                        Circle()
+                            .fill(widgetPhaseColor(for: entry.phase).opacity(0.25))
+                            .frame(width: 94, height: 94)
+                    }
 
-                Image(spriteName)
-                    .resizable()
-                    .interpolation(.none)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
+                    Image(spriteName)
+                        .resizable()
+                        .interpolation(.none)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 80, height: 80)
+
+                    // Cosmetic hat
+                    if let hatAsset = entry.cosmeticHat {
+                        Image(hatAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .frame(width: 48, height: 48)
+                            .offset(y: -24)
+                    }
+
+                    // Cosmetic accessory
+                    if let accAsset = entry.cosmeticAccessory {
+                        Image(accAsset)
+                            .resizable()
+                            .interpolation(.none)
+                            .frame(width: 40, height: 40)
+                            .offset(x: 20)
+                    }
+                }
             }
             .frame(width: 100, height: 100)
 
@@ -656,7 +777,7 @@ struct PixelPalAccessoryInlineView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        Label("Pixel Pace Phase \(entry.phase)", systemImage: widgetPhaseIcon(for: entry.phase))
+        Label("Pixel Stepper Phase \(entry.phase)", systemImage: widgetPhaseIcon(for: entry.phase))
     }
 }
 
@@ -689,7 +810,7 @@ struct PixelPalHomeWidget: Widget {
                     .background(gradient)
             }
         }
-        .configurationDisplayName("Pixel Pace")
+        .configurationDisplayName("Pixel Stepper")
         .description("Your ambient walking companion.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
@@ -729,8 +850,8 @@ struct PixelPalLockScreenWidget: Widget {
                 PixelPalLockScreenView(entry: entry)
             }
         }
-        .configurationDisplayName("Pixel Pace")
-        .description("Your Pixel Pace character on the Lock Screen.")
+        .configurationDisplayName("Pixel Stepper")
+        .description("Your Pixel Stepper character on the Lock Screen.")
         .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }

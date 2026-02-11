@@ -58,9 +58,9 @@ struct ShareCardBackgroundView: View {
 
 struct WatermarkView: View {
     var body: some View {
-        Text("@officialpixelpace")
+        Text("@officialpixelstepper")
             .font(.system(size: 11, weight: .medium, design: .rounded))
-            .foregroundColor(.white.opacity(0.55))
+            .foregroundColor(.white)
             .padding(.bottom, 24)
     }
 }
@@ -77,7 +77,7 @@ struct ShareProgressBar: View {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 3)
-                        .fill(Color.white.opacity(0.12))
+                        .fill(Color.white.opacity(0.3))
 
                     RoundedRectangle(cornerRadius: 3)
                         .fill(
@@ -112,7 +112,7 @@ struct ShareStateBadge: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 3)
-        .background(color.opacity(0.25))
+        .background(color.opacity(0.4))
         .clipShape(Capsule())
     }
 }
@@ -142,13 +142,16 @@ struct ShareWeekDots: View {
 
     private func dotColor(for day: DailyHistory.DayViewData) -> Color {
         if day.isToday {
-            return day.isGoalMet ? Color(hex: "#34C759") : .blue
-        } else if !day.hasData {
-            return Color.white.opacity(0.18)
-        } else if day.isGoalMet {
+            return day.steps >= 7500 ? Color(hex: "#34C759") : .blue
+        }
+        guard day.hasData else { return Color.white.opacity(0.4) }
+
+        if day.steps >= 7500 {
             return Color(hex: "#34C759")
+        } else if day.steps >= 2500 {
+            return .yellow
         } else {
-            return Color(hex: "#FF3B30").opacity(0.9)
+            return Color(hex: "#FF3B30")
         }
     }
 }
@@ -171,7 +174,7 @@ struct SharePhaseBadge: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
-        .background(color.opacity(0.25))
+        .background(color.opacity(0.4))
         .clipShape(Capsule())
     }
 }
@@ -196,7 +199,7 @@ struct ShareBarChartView: View {
 
                     Text(dayLabel(for: day.date))
                         .font(.system(size: 9, weight: .medium, design: .rounded))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(.white)
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -204,14 +207,14 @@ struct ShareBarChartView: View {
     }
 
     private func barColor(for day: DailyHistory.DayViewData) -> Color {
-        if day.isToday {
-            return Color.white.opacity(0.55)
-        } else if day.isGoalMet {
-            return Color(hex: "#34C759")
-        } else if day.hasData {
-            return Color(hex: "#FF3B30").opacity(0.9)
+        guard day.hasData else { return Color.white.opacity(0.3) }
+
+        if day.steps >= 7500 {
+            return Color(hex: "#34C759") // green — vital
+        } else if day.steps >= 2500 {
+            return .yellow // yellow — neutral
         } else {
-            return Color.white.opacity(0.12)
+            return Color(hex: "#FF3B30") // red — low energy
         }
     }
 
@@ -247,7 +250,7 @@ struct ShareAvatarView: View {
         ZStack {
             Circle()
                 .fill(RadialGradient(
-                    colors: [phaseColor.opacity(0.4), .clear],
+                    colors: [phaseColor.opacity(0.6), .clear],
                     center: .center,
                     startRadius: size * 0.1,
                     endRadius: size * 0.55
@@ -288,7 +291,7 @@ struct ConfettiOverlay: View {
                 let sparkle = sparkles[i]
                 Image(systemName: "sparkle")
                     .font(.system(size: 14 * sparkle.scale))
-                    .foregroundColor(.yellow.opacity(0.9))
+                    .foregroundColor(.yellow)
                     .rotationEffect(.degrees(sparkle.rotation))
                     .position(
                         x: size.width * sparkle.x,

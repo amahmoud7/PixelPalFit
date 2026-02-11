@@ -1,0 +1,827 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		048B631B1B41548550ED3740 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E6246BE07FFE09A7A6D20 /* NotificationManager.swift */; };
+		0B3D1000D2402E9681A131D0 /* StepMoment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453EDBD9217F80294F304B9F /* StepMoment.swift */; };
+		0BE68207EECC329B9A3B1041 /* DailyMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA9BBACBDC071E93930255 /* DailyMission.swift */; };
+		103CB00366BE6E9BE60A7298 /* ShareCardRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD416A8A0CBE2E849AC9B25 /* ShareCardRenderer.swift */; };
+		10C65199893E1F11C8C4739D /* StreakShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F170A7E64FFE53579B6EA9AB /* StreakShareCard.swift */; };
+		116A2DAFDCB794128723AA4B /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCE30787F1462AE45F74997 /* ShareSheetView.swift */; };
+		136403040614F20B0F292A52 /* PhaseDecayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFC5EC35F2273E11121B447 /* PhaseDecayState.swift */; };
+		165DED9E4B05DE95BD1A376A /* StepMomentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8ED1E8FB51EEC142A536AA9 /* StepMomentManager.swift */; };
+		17B9C352D2E43D58A5071383 /* WeeklySummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C38701E8533948EB8C3942 /* WeeklySummaryCard.swift */; };
+		1C5D2CAE63E47B27B502763D /* CelebrationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E9168A8AAB9B66CEC8BAC5 /* CelebrationEvent.swift */; };
+		1DB36660DC1B53EF7E7EBF99 /* WardrobeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBE963BD0C4AACDC84CEF39D /* WardrobeView.swift */; };
+		1F04B3E5899A0524CC05FE9E /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98FA4D25949A1FD757495C1 /* AppStateManager.swift */; };
+		245F2EC686D9F8DF83CEABF7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CBBA09896F6B97E0B15682F1 /* PrivacyInfo.xcprivacy */; };
+		31D2B85F3FB51D710ECC0070 /* AvatarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A37212DC28878AE8E6A36A7 /* AvatarState.swift */; };
+		31E81B321E67B5BE2F984E1B /* MissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834DB39E15EF6CEFED728631 /* MissionManager.swift */; };
+		3F50DE994134F25B8D3FFDD8 /* ShareDestinationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC56DCC3ED554B1B37A8D3C /* ShareDestinationManager.swift */; };
+		445B9FD4C221FEB7A027464D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 2EDF8700E1D4BAF58BF46A11 /* PrivacyInfo.xcprivacy */; };
+		47705C627537DD9CBFD33368 /* SpriteAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE3F2445C07ED122B911E27 /* SpriteAssets.swift */; };
+		4B4BA3CFCE5C1B219A743FA5 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BA9F096DE4466C6B6700FF /* SplashScreenView.swift */; };
+		5C8A383D73D1CEADF2F2A631 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940CBBAE2B9B78CC9C820B9 /* HistoryManager.swift */; };
+		6003B0BABAF120FF2380941B /* StepMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269C7C6C0BC1B75C4987FD8 /* StepMomentView.swift */; };
+		6218ED4CC6D7B526A2955BD4 /* PhaseCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745386A9BC60B26F982A23A9 /* PhaseCalculator.swift */; };
+		6720BC30FD66CFD77075875C /* PersonalRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A2A065114E96CA733AB466 /* PersonalRecordsView.swift */; };
+		69FF6E42D8DD600C3673FB94 /* CosmeticCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50AC3A455063C329D71E25 /* CosmeticCatalog.swift */; };
+		6AE59C53593BA17D06CCA381 /* StoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = B3D916451ACAB16E7DD5B197 /* StoreKitConfiguration.storekit */; };
+		6D700E59A2D60FD41B1D7674 /* ConfettiParticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BD6FAC39D2CF1E6EA18B39 /* ConfettiParticleView.swift */; };
+		763228FAC3E551E809791931 /* PixelPalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1150D3D2CF2D14535115617A /* PixelPalApp.swift */; };
+		7B30140273E246C18B930B67 /* CosmeticDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990FB8CAF352BECD74986ED8 /* CosmeticDetailSheet.swift */; };
+		848763A95368B9A1B94AED38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4ED7995D9AC95D8792A4051 /* ContentView.swift */; };
+		8AEBD8E07740508809323527 /* AvatarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A37212DC28878AE8E6A36A7 /* AvatarState.swift */; };
+		8D02AEB3EAA71BE9E5113EEF /* DailyHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A716078925E22BE0CE98619A /* DailyHistory.swift */; };
+		8DA9C8D9C16258F8C714D258 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583CF36AB05AF4542EAE42E3 /* HomeView.swift */; };
+		8E96D559D6D5F159356223EA /* AnimatedImageEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC44E9C05F5F61B2A3D3CCC /* AnimatedImageEncoder.swift */; };
+		910CF9692403EEF8591D2669 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065D97FD86F4B771897DBC88 /* StoreManager.swift */; };
+		91311867DB7F57741EF5A243 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0605498556C450209E0EEAF3 /* SharedData.swift */; };
+		93382DA8F6F1D1D9E2933E11 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3157DD9FB9908797FEAAF9 /* AvatarView.swift */; };
+		948CCC1D62AA23AB583F50E3 /* CosmeticInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C37127728003CF0EC4218D /* CosmeticInventory.swift */; };
+		96C983E60AFF16C63579377C /* CosmeticItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8D44AC8BB81DA1FE322BC /* CosmeticItem.swift */; };
+		989D18E6E1290F1234AA3EC4 /* SpriteTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5353C21D085F870FB282F8 /* SpriteTestView.swift */; };
+		99AA48462F3675FD70289A09 /* MonthCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5D9C2A43C0E552D4B9BCE /* MonthCalendarView.swift */; };
+		9AE70B73E192435804143B9D /* Entitlements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20D8E9670B712C82F9D9EFF /* Entitlements.swift */; };
+		9B9F3785CF984EBDC4C09450 /* EvolutionMilestoneCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F263B68131F147596B8872B7 /* EvolutionMilestoneCard.swift */; };
+		A0D30FF4AC2CA3694B83326F /* DailyMissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC371724114A66E70ABB8DC1 /* DailyMissionsView.swift */; };
+		A4E8F93A4A5956C3FD2D7E6C /* CelebrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D77A4353738C6FEF39553B /* CelebrationManager.swift */; };
+		A5D5E424728429AB085549DD /* DailyProgressCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3199A41A8A81D97CDF622A3E /* DailyProgressCard.swift */; };
+		A6FE4E008A73698A5C06B55A /* PixelPalLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546DA7885B3F39D81272DCA8 /* PixelPalLiveActivity.swift */; };
+		A7AC8A9D26552F9EA51EF7DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67657D351ADA94CA06974CE2 /* Assets.xcassets */; };
+		A9A8913626E06A9C36A83430 /* CosmeticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C3624F0E96316BF87F942 /* CosmeticManager.swift */; };
+		AA4D7EE14798D66F524CE8D5 /* ShareCardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412312C95280C7C5E9A4CFB /* ShareCardConfig.swift */; };
+		AAD00749746D29C96DE5AD4C /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0605498556C450209E0EEAF3 /* SharedData.swift */; };
+		AC9FDE3CD8FEE697962D74B4 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E992894D05EDC361596697 /* MainTabView.swift */; };
+		ACF52D53BC9C212012806C3A /* SpriteAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE3F2445C07ED122B911E27 /* SpriteAssets.swift */; };
+		B1A361723F29933B6D82FA97 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8CB95C1D7AD2CB2ACDA102 /* HealthKitManager.swift */; };
+		B30C219DED47EAEA7947C5F3 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4423C34CD31AEFCCAE29B4E /* OnboardingView.swift */; };
+		B4911566EAF20C0BC52648C9 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5567E8D52BA8533F1003FB /* UserProfile.swift */; };
+		B51DC2E8807C8C83A54F9DA4 /* CelebrationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912B17EF772FD209CAC77662 /* CelebrationOverlay.swift */; };
+		C872B57688B81BCAB2AF9BFA /* PixelPalWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A734FBA6AA086796BCF8D341 /* PixelPalWidget.swift */; };
+		CA2C6C419E762830ECA08D6B /* ShareCardComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB303A754234753676477E9 /* ShareCardComponents.swift */; };
+		CB010E18B8576F56D52B42A8 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF9BAD64FB6128AB335B293 /* PersistenceManager.swift */; };
+		D55826F7BCBA80F29DF436A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67657D351ADA94CA06974CE2 /* Assets.xcassets */; };
+		D619DC6260D52EDABB5C5721 /* StreakHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E78F9CD35518BBF4D1BE396 /* StreakHeroView.swift */; };
+		D7ACC94BBF49EBA23FF478C7 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7E60B685DE83222622B623 /* PaywallView.swift */; };
+		DA9DF8C35C3F1961E037131A /* PixelPalAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD14021E47ECE835F876F08 /* PixelPalAttributes.swift */; };
+		DB32F0940A8ED9D877C187DA /* DailyGoalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF0529DD43883CFE2287F1B /* DailyGoalState.swift */; };
+		DC481FC0F80943CAA99E3B24 /* WeekMemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81CAF5CF55A527C5C978AE /* WeekMemoryView.swift */; };
+		DC7208961AD0305596603B53 /* CosmeticShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7EE32DD2EA6C74C827D60D /* CosmeticShopView.swift */; };
+		E495F00A42338BB7A1BF0532 /* ProgressState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186E031D2859844FEF730F7 /* ProgressState.swift */; };
+		E4D37393BD08CEC4680DA6EA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A497A667FC0458807E1429EC /* ProfileView.swift */; };
+		E5C7572E72C91BEFADDF9907 /* CosmeticItemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF493BD395541AD88BEF1964 /* CosmeticItemCard.swift */; };
+		E5DCB9897E28305CB3841BAE /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3314D9DE450772F5CA4AAE61 /* StatsView.swift */; };
+		E74A54525E46F416DA158F14 /* PixelPalAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD14021E47ECE835F876F08 /* PixelPalAttributes.swift */; };
+		E8F4FAF88B94888292EF3A3C /* PhaseDecayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BEB1A7D27BE9EA051B13F8 /* PhaseDecayManager.swift */; };
+		F2742BB2F29AB1818EE074F5 /* PixelPalWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2E3B42FDFF4894985190C8F8 /* PixelPalWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F684B6C7F282EF9EFB2849C4 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A4BFA65530DEFBD86FAF19 /* LiveActivityManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FCE2448706B3DBD25DAD61CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 173B5B473C8F07B4010DA083 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD465A14373F999A691C1ACA;
+			remoteInfo = PixelPalWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		544E9AAC67222537F406D9BE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F2742BB2F29AB1818EE074F5 /* PixelPalWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0605498556C450209E0EEAF3 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
+		065D97FD86F4B771897DBC88 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		08C37127728003CF0EC4218D /* CosmeticInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticInventory.swift; sourceTree = "<group>"; };
+		08C38701E8533948EB8C3942 /* WeeklySummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryCard.swift; sourceTree = "<group>"; };
+		0A4616C2DA415EE4EDFCAAA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0E78F9CD35518BBF4D1BE396 /* StreakHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakHeroView.swift; sourceTree = "<group>"; };
+		1150D3D2CF2D14535115617A /* PixelPalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalApp.swift; sourceTree = "<group>"; };
+		1A37212DC28878AE8E6A36A7 /* AvatarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarState.swift; sourceTree = "<group>"; };
+		2186E031D2859844FEF730F7 /* ProgressState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressState.swift; sourceTree = "<group>"; };
+		2940CBBAE2B9B78CC9C820B9 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
+		2E3B42FDFF4894985190C8F8 /* PixelPalWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PixelPalWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EDF8700E1D4BAF58BF46A11 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		3199A41A8A81D97CDF622A3E /* DailyProgressCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressCard.swift; sourceTree = "<group>"; };
+		3314D9DE450772F5CA4AAE61 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		35BA9F096DE4466C6B6700FF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		3AC44E9C05F5F61B2A3D3CCC /* AnimatedImageEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedImageEncoder.swift; sourceTree = "<group>"; };
+		453EDBD9217F80294F304B9F /* StepMoment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepMoment.swift; sourceTree = "<group>"; };
+		45AA9BBACBDC071E93930255 /* DailyMission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMission.swift; sourceTree = "<group>"; };
+		48D77A4353738C6FEF39553B /* CelebrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationManager.swift; sourceTree = "<group>"; };
+		50A4BFA65530DEFBD86FAF19 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		546DA7885B3F39D81272DCA8 /* PixelPalLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalLiveActivity.swift; sourceTree = "<group>"; };
+		583CF36AB05AF4542EAE42E3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5B3C3624F0E96316BF87F942 /* CosmeticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticManager.swift; sourceTree = "<group>"; };
+		5D8CB95C1D7AD2CB2ACDA102 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		67657D351ADA94CA06974CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A9E6246BE07FFE09A7A6D20 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		6AB303A754234753676477E9 /* ShareCardComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardComponents.swift; sourceTree = "<group>"; };
+		6AD14021E47ECE835F876F08 /* PixelPalAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalAttributes.swift; sourceTree = "<group>"; };
+		71BD6FAC39D2CF1E6EA18B39 /* ConfettiParticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiParticleView.swift; sourceTree = "<group>"; };
+		73BEB1A7D27BE9EA051B13F8 /* PhaseDecayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseDecayManager.swift; sourceTree = "<group>"; };
+		745386A9BC60B26F982A23A9 /* PhaseCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseCalculator.swift; sourceTree = "<group>"; };
+		7DCE30787F1462AE45F74997 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		7F81CAF5CF55A527C5C978AE /* WeekMemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekMemoryView.swift; sourceTree = "<group>"; };
+		834DB39E15EF6CEFED728631 /* MissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionManager.swift; sourceTree = "<group>"; };
+		8C50AC3A455063C329D71E25 /* CosmeticCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticCatalog.swift; sourceTree = "<group>"; };
+		8CC56DCC3ED554B1B37A8D3C /* ShareDestinationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationManager.swift; sourceTree = "<group>"; };
+		912B17EF772FD209CAC77662 /* CelebrationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationOverlay.swift; sourceTree = "<group>"; };
+		990FB8CAF352BECD74986ED8 /* CosmeticDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticDetailSheet.swift; sourceTree = "<group>"; };
+		9FE3F2445C07ED122B911E27 /* SpriteAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteAssets.swift; sourceTree = "<group>"; };
+		A20D8E9670B712C82F9D9EFF /* Entitlements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entitlements.swift; sourceTree = "<group>"; };
+		A497A667FC0458807E1429EC /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A716078925E22BE0CE98619A /* DailyHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyHistory.swift; sourceTree = "<group>"; };
+		A734FBA6AA086796BCF8D341 /* PixelPalWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalWidget.swift; sourceTree = "<group>"; };
+		AB7EE32DD2EA6C74C827D60D /* CosmeticShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticShopView.swift; sourceTree = "<group>"; };
+		B3D916451ACAB16E7DD5B197 /* StoreKitConfiguration.storekit */ = {isa = PBXFileReference; path = StoreKitConfiguration.storekit; sourceTree = "<group>"; };
+		C4423C34CD31AEFCCAE29B4E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		CBBA09896F6B97E0B15682F1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		CBE963BD0C4AACDC84CEF39D /* WardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeView.swift; sourceTree = "<group>"; };
+		CC7E60B685DE83222622B623 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		CDD45F2612EEABA23E6DBA52 /* PixelPal.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PixelPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA8D44AC8BB81DA1FE322BC /* CosmeticItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticItem.swift; sourceTree = "<group>"; };
+		D269C7C6C0BC1B75C4987FD8 /* StepMomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepMomentView.swift; sourceTree = "<group>"; };
+		D8ED1E8FB51EEC142A536AA9 /* StepMomentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepMomentManager.swift; sourceTree = "<group>"; };
+		D9E9168A8AAB9B66CEC8BAC5 /* CelebrationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationEvent.swift; sourceTree = "<group>"; };
+		DB3157DD9FB9908797FEAAF9 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		DBF9BAD64FB6128AB335B293 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		DE5567E8D52BA8533F1003FB /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		E0993CB0BD14699D10258D69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E2A5D9C2A43C0E552D4B9BCE /* MonthCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarView.swift; sourceTree = "<group>"; };
+		E412312C95280C7C5E9A4CFB /* ShareCardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardConfig.swift; sourceTree = "<group>"; };
+		E98FA4D25949A1FD757495C1 /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
+		EC371724114A66E70ABB8DC1 /* DailyMissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMissionsView.swift; sourceTree = "<group>"; };
+		ED5353C21D085F870FB282F8 /* SpriteTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteTestView.swift; sourceTree = "<group>"; };
+		EFF0529DD43883CFE2287F1B /* DailyGoalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalState.swift; sourceTree = "<group>"; };
+		EFFC5EC35F2273E11121B447 /* PhaseDecayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseDecayState.swift; sourceTree = "<group>"; };
+		F170A7E64FFE53579B6EA9AB /* StreakShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakShareCard.swift; sourceTree = "<group>"; };
+		F263B68131F147596B8872B7 /* EvolutionMilestoneCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionMilestoneCard.swift; sourceTree = "<group>"; };
+		F4ED7995D9AC95D8792A4051 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F5E992894D05EDC361596697 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		F6A2A065114E96CA733AB466 /* PersonalRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecordsView.swift; sourceTree = "<group>"; };
+		FDD416A8A0CBE2E849AC9B25 /* ShareCardRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardRenderer.swift; sourceTree = "<group>"; };
+		FF493BD395541AD88BEF1964 /* CosmeticItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticItemCard.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1A68AEF3F87C64428DA126E4 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6F3C0A0DC02ECEC6F44B2225 /* App */,
+				79F3EF1BFE9EB8BE90AC4311 /* Core */,
+				1CC183C9ECE933A866E37C82 /* Views */,
+			);
+			name = Sources;
+			path = PixelPal/Sources;
+			sourceTree = "<group>";
+		};
+		1CC183C9ECE933A866E37C82 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DB3157DD9FB9908797FEAAF9 /* AvatarView.swift */,
+				F4ED7995D9AC95D8792A4051 /* ContentView.swift */,
+				F5E992894D05EDC361596697 /* MainTabView.swift */,
+				C4423C34CD31AEFCCAE29B4E /* OnboardingView.swift */,
+				CC7E60B685DE83222622B623 /* PaywallView.swift */,
+				35BA9F096DE4466C6B6700FF /* SplashScreenView.swift */,
+				ED5353C21D085F870FB282F8 /* SpriteTestView.swift */,
+				7F81CAF5CF55A527C5C978AE /* WeekMemoryView.swift */,
+				4D0E05F20377885C9423968E /* Celebrations */,
+				91EEB657EBB3472C9622F3E5 /* Cosmetics */,
+				FA12C5F0005A320BCCA6EC88 /* Home */,
+				4EF62B3E5A5BD3E11940820D /* Profile */,
+				F4656A899770554556AD7CC6 /* Share */,
+				7D245C7673F709D69286611A /* Stats */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4D0E05F20377885C9423968E /* Celebrations */ = {
+			isa = PBXGroup;
+			children = (
+				912B17EF772FD209CAC77662 /* CelebrationOverlay.swift */,
+				71BD6FAC39D2CF1E6EA18B39 /* ConfettiParticleView.swift */,
+			);
+			path = Celebrations;
+			sourceTree = "<group>";
+		};
+		4EF62B3E5A5BD3E11940820D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				A497A667FC0458807E1429EC /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		6BFC2F7DCFC6DC36AC419DF1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CDD45F2612EEABA23E6DBA52 /* PixelPal.app */,
+				2E3B42FDFF4894985190C8F8 /* PixelPalWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6F3C0A0DC02ECEC6F44B2225 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1150D3D2CF2D14535115617A /* PixelPalApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		756D9CA101DFE5E97C6E0D33 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0A4616C2DA415EE4EDFCAAA6 /* Info.plist */,
+				2EDF8700E1D4BAF58BF46A11 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			path = PixelPalWidget/Resources;
+			sourceTree = "<group>";
+		};
+		79F3EF1BFE9EB8BE90AC4311 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E98FA4D25949A1FD757495C1 /* AppStateManager.swift */,
+				1A37212DC28878AE8E6A36A7 /* AvatarState.swift */,
+				8C50AC3A455063C329D71E25 /* CosmeticCatalog.swift */,
+				5D8CB95C1D7AD2CB2ACDA102 /* HealthKitManager.swift */,
+				50A4BFA65530DEFBD86FAF19 /* LiveActivityManager.swift */,
+				745386A9BC60B26F982A23A9 /* PhaseCalculator.swift */,
+				6AD14021E47ECE835F876F08 /* PixelPalAttributes.swift */,
+				0605498556C450209E0EEAF3 /* SharedData.swift */,
+				9FE3F2445C07ED122B911E27 /* SpriteAssets.swift */,
+				DD5CB0317AF2771B02A7B4F5 /* Managers */,
+				98A70AA900319F9884086E05 /* Models */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		7D245C7673F709D69286611A /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				E2A5D9C2A43C0E552D4B9BCE /* MonthCalendarView.swift */,
+				F6A2A065114E96CA733AB466 /* PersonalRecordsView.swift */,
+				3314D9DE450772F5CA4AAE61 /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		91EEB657EBB3472C9622F3E5 /* Cosmetics */ = {
+			isa = PBXGroup;
+			children = (
+				990FB8CAF352BECD74986ED8 /* CosmeticDetailSheet.swift */,
+				FF493BD395541AD88BEF1964 /* CosmeticItemCard.swift */,
+				AB7EE32DD2EA6C74C827D60D /* CosmeticShopView.swift */,
+				CBE963BD0C4AACDC84CEF39D /* WardrobeView.swift */,
+			);
+			path = Cosmetics;
+			sourceTree = "<group>";
+		};
+		98A70AA900319F9884086E05 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D9E9168A8AAB9B66CEC8BAC5 /* CelebrationEvent.swift */,
+				08C37127728003CF0EC4218D /* CosmeticInventory.swift */,
+				CEA8D44AC8BB81DA1FE322BC /* CosmeticItem.swift */,
+				EFF0529DD43883CFE2287F1B /* DailyGoalState.swift */,
+				A716078925E22BE0CE98619A /* DailyHistory.swift */,
+				45AA9BBACBDC071E93930255 /* DailyMission.swift */,
+				A20D8E9670B712C82F9D9EFF /* Entitlements.swift */,
+				EFFC5EC35F2273E11121B447 /* PhaseDecayState.swift */,
+				2186E031D2859844FEF730F7 /* ProgressState.swift */,
+				E412312C95280C7C5E9A4CFB /* ShareCardConfig.swift */,
+				453EDBD9217F80294F304B9F /* StepMoment.swift */,
+				DE5567E8D52BA8533F1003FB /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D03547F07AD5FB48AEB9B505 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				67657D351ADA94CA06974CE2 /* Assets.xcassets */,
+				E0993CB0BD14699D10258D69 /* Info.plist */,
+				CBBA09896F6B97E0B15682F1 /* PrivacyInfo.xcprivacy */,
+				B3D916451ACAB16E7DD5B197 /* StoreKitConfiguration.storekit */,
+			);
+			name = Resources;
+			path = PixelPal/Resources;
+			sourceTree = "<group>";
+		};
+		DD5CB0317AF2771B02A7B4F5 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3AC44E9C05F5F61B2A3D3CCC /* AnimatedImageEncoder.swift */,
+				48D77A4353738C6FEF39553B /* CelebrationManager.swift */,
+				5B3C3624F0E96316BF87F942 /* CosmeticManager.swift */,
+				2940CBBAE2B9B78CC9C820B9 /* HistoryManager.swift */,
+				834DB39E15EF6CEFED728631 /* MissionManager.swift */,
+				6A9E6246BE07FFE09A7A6D20 /* NotificationManager.swift */,
+				DBF9BAD64FB6128AB335B293 /* PersistenceManager.swift */,
+				73BEB1A7D27BE9EA051B13F8 /* PhaseDecayManager.swift */,
+				FDD416A8A0CBE2E849AC9B25 /* ShareCardRenderer.swift */,
+				8CC56DCC3ED554B1B37A8D3C /* ShareDestinationManager.swift */,
+				D8ED1E8FB51EEC142A536AA9 /* StepMomentManager.swift */,
+				065D97FD86F4B771897DBC88 /* StoreManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		E069E1A49DFD75C410C5496E = {
+			isa = PBXGroup;
+			children = (
+				D03547F07AD5FB48AEB9B505 /* Resources */,
+				756D9CA101DFE5E97C6E0D33 /* Resources */,
+				1A68AEF3F87C64428DA126E4 /* Sources */,
+				F965FFAEF453DB27DD476F91 /* Sources */,
+				6BFC2F7DCFC6DC36AC419DF1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F4656A899770554556AD7CC6 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				3199A41A8A81D97CDF622A3E /* DailyProgressCard.swift */,
+				F263B68131F147596B8872B7 /* EvolutionMilestoneCard.swift */,
+				6AB303A754234753676477E9 /* ShareCardComponents.swift */,
+				7DCE30787F1462AE45F74997 /* ShareSheetView.swift */,
+				F170A7E64FFE53579B6EA9AB /* StreakShareCard.swift */,
+				08C38701E8533948EB8C3942 /* WeeklySummaryCard.swift */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		F965FFAEF453DB27DD476F91 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				546DA7885B3F39D81272DCA8 /* PixelPalLiveActivity.swift */,
+				A734FBA6AA086796BCF8D341 /* PixelPalWidget.swift */,
+			);
+			name = Sources;
+			path = PixelPalWidget/Sources;
+			sourceTree = "<group>";
+		};
+		FA12C5F0005A320BCCA6EC88 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				EC371724114A66E70ABB8DC1 /* DailyMissionsView.swift */,
+				583CF36AB05AF4542EAE42E3 /* HomeView.swift */,
+				D269C7C6C0BC1B75C4987FD8 /* StepMomentView.swift */,
+				0E78F9CD35518BBF4D1BE396 /* StreakHeroView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BCB888E32DF0E0F24E69BC35 /* PixelPal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D3F1BB6EBC63683017AFCDC /* Build configuration list for PBXNativeTarget "PixelPal" */;
+			buildPhases = (
+				80EF6E7674BCAD91184FE5C1 /* Sources */,
+				8525739ADB8E50C758D1AF9A /* Resources */,
+				544E9AAC67222537F406D9BE /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4B946310212A19D83ED24A5D /* PBXTargetDependency */,
+			);
+			name = PixelPal;
+			packageProductDependencies = (
+			);
+			productName = PixelPal;
+			productReference = CDD45F2612EEABA23E6DBA52 /* PixelPal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CD465A14373F999A691C1ACA /* PixelPalWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96BC7B3556D4EF6B113D0BE7 /* Build configuration list for PBXNativeTarget "PixelPalWidget" */;
+			buildPhases = (
+				440BCE57756D27CB0A2DC6CD /* Sources */,
+				44DA676875C046DFD37FFCF1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PixelPalWidget;
+			packageProductDependencies = (
+			);
+			productName = PixelPalWidget;
+			productReference = 2E3B42FDFF4894985190C8F8 /* PixelPalWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		173B5B473C8F07B4010DA083 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					BCB888E32DF0E0F24E69BC35 = {
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = YES;
+							};
+							com.apple.HealthKit = {
+								enabled = YES;
+							};
+						};
+					};
+					CD465A14373F999A691C1ACA = {
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = YES;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = F7D4DB7827D257F63CE62AD5 /* Build configuration list for PBXProject "PixelStepper" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E069E1A49DFD75C410C5496E;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BCB888E32DF0E0F24E69BC35 /* PixelPal */,
+				CD465A14373F999A691C1ACA /* PixelPalWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		44DA676875C046DFD37FFCF1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D55826F7BCBA80F29DF436A4 /* Assets.xcassets in Resources */,
+				445B9FD4C221FEB7A027464D /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8525739ADB8E50C758D1AF9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7AC8A9D26552F9EA51EF7DC /* Assets.xcassets in Resources */,
+				245F2EC686D9F8DF83CEABF7 /* PrivacyInfo.xcprivacy in Resources */,
+				6AE59C53593BA17D06CCA381 /* StoreKitConfiguration.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		440BCE57756D27CB0A2DC6CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31D2B85F3FB51D710ECC0070 /* AvatarState.swift in Sources */,
+				E74A54525E46F416DA158F14 /* PixelPalAttributes.swift in Sources */,
+				A6FE4E008A73698A5C06B55A /* PixelPalLiveActivity.swift in Sources */,
+				C872B57688B81BCAB2AF9BFA /* PixelPalWidget.swift in Sources */,
+				91311867DB7F57741EF5A243 /* SharedData.swift in Sources */,
+				ACF52D53BC9C212012806C3A /* SpriteAssets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EF6E7674BCAD91184FE5C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E96D559D6D5F159356223EA /* AnimatedImageEncoder.swift in Sources */,
+				1F04B3E5899A0524CC05FE9E /* AppStateManager.swift in Sources */,
+				8AEBD8E07740508809323527 /* AvatarState.swift in Sources */,
+				93382DA8F6F1D1D9E2933E11 /* AvatarView.swift in Sources */,
+				1C5D2CAE63E47B27B502763D /* CelebrationEvent.swift in Sources */,
+				A4E8F93A4A5956C3FD2D7E6C /* CelebrationManager.swift in Sources */,
+				B51DC2E8807C8C83A54F9DA4 /* CelebrationOverlay.swift in Sources */,
+				6D700E59A2D60FD41B1D7674 /* ConfettiParticleView.swift in Sources */,
+				848763A95368B9A1B94AED38 /* ContentView.swift in Sources */,
+				69FF6E42D8DD600C3673FB94 /* CosmeticCatalog.swift in Sources */,
+				7B30140273E246C18B930B67 /* CosmeticDetailSheet.swift in Sources */,
+				948CCC1D62AA23AB583F50E3 /* CosmeticInventory.swift in Sources */,
+				96C983E60AFF16C63579377C /* CosmeticItem.swift in Sources */,
+				E5C7572E72C91BEFADDF9907 /* CosmeticItemCard.swift in Sources */,
+				A9A8913626E06A9C36A83430 /* CosmeticManager.swift in Sources */,
+				DC7208961AD0305596603B53 /* CosmeticShopView.swift in Sources */,
+				DB32F0940A8ED9D877C187DA /* DailyGoalState.swift in Sources */,
+				8D02AEB3EAA71BE9E5113EEF /* DailyHistory.swift in Sources */,
+				0BE68207EECC329B9A3B1041 /* DailyMission.swift in Sources */,
+				A0D30FF4AC2CA3694B83326F /* DailyMissionsView.swift in Sources */,
+				A5D5E424728429AB085549DD /* DailyProgressCard.swift in Sources */,
+				9AE70B73E192435804143B9D /* Entitlements.swift in Sources */,
+				9B9F3785CF984EBDC4C09450 /* EvolutionMilestoneCard.swift in Sources */,
+				B1A361723F29933B6D82FA97 /* HealthKitManager.swift in Sources */,
+				5C8A383D73D1CEADF2F2A631 /* HistoryManager.swift in Sources */,
+				8DA9C8D9C16258F8C714D258 /* HomeView.swift in Sources */,
+				F684B6C7F282EF9EFB2849C4 /* LiveActivityManager.swift in Sources */,
+				AC9FDE3CD8FEE697962D74B4 /* MainTabView.swift in Sources */,
+				31E81B321E67B5BE2F984E1B /* MissionManager.swift in Sources */,
+				99AA48462F3675FD70289A09 /* MonthCalendarView.swift in Sources */,
+				048B631B1B41548550ED3740 /* NotificationManager.swift in Sources */,
+				B30C219DED47EAEA7947C5F3 /* OnboardingView.swift in Sources */,
+				D7ACC94BBF49EBA23FF478C7 /* PaywallView.swift in Sources */,
+				CB010E18B8576F56D52B42A8 /* PersistenceManager.swift in Sources */,
+				6720BC30FD66CFD77075875C /* PersonalRecordsView.swift in Sources */,
+				6218ED4CC6D7B526A2955BD4 /* PhaseCalculator.swift in Sources */,
+				E8F4FAF88B94888292EF3A3C /* PhaseDecayManager.swift in Sources */,
+				136403040614F20B0F292A52 /* PhaseDecayState.swift in Sources */,
+				763228FAC3E551E809791931 /* PixelPalApp.swift in Sources */,
+				DA9DF8C35C3F1961E037131A /* PixelPalAttributes.swift in Sources */,
+				E4D37393BD08CEC4680DA6EA /* ProfileView.swift in Sources */,
+				E495F00A42338BB7A1BF0532 /* ProgressState.swift in Sources */,
+				CA2C6C419E762830ECA08D6B /* ShareCardComponents.swift in Sources */,
+				AA4D7EE14798D66F524CE8D5 /* ShareCardConfig.swift in Sources */,
+				103CB00366BE6E9BE60A7298 /* ShareCardRenderer.swift in Sources */,
+				3F50DE994134F25B8D3FFDD8 /* ShareDestinationManager.swift in Sources */,
+				116A2DAFDCB794128723AA4B /* ShareSheetView.swift in Sources */,
+				AAD00749746D29C96DE5AD4C /* SharedData.swift in Sources */,
+				4B4BA3CFCE5C1B219A743FA5 /* SplashScreenView.swift in Sources */,
+				47705C627537DD9CBFD33368 /* SpriteAssets.swift in Sources */,
+				989D18E6E1290F1234AA3EC4 /* SpriteTestView.swift in Sources */,
+				E5DCB9897E28305CB3841BAE /* StatsView.swift in Sources */,
+				0B3D1000D2402E9681A131D0 /* StepMoment.swift in Sources */,
+				165DED9E4B05DE95BD1A376A /* StepMomentManager.swift in Sources */,
+				6003B0BABAF120FF2380941B /* StepMomentView.swift in Sources */,
+				910CF9692403EEF8591D2669 /* StoreManager.swift in Sources */,
+				D619DC6260D52EDABB5C5721 /* StreakHeroView.swift in Sources */,
+				10C65199893E1F11C8C4739D /* StreakShareCard.swift in Sources */,
+				B4911566EAF20C0BC52648C9 /* UserProfile.swift in Sources */,
+				1DB36660DC1B53EF7E7EBF99 /* WardrobeView.swift in Sources */,
+				DC481FC0F80943CAA99E3B24 /* WeekMemoryView.swift in Sources */,
+				17B9C352D2E43D58A5071383 /* WeeklySummaryCard.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4B946310212A19D83ED24A5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD465A14373F999A691C1ACA /* PixelPalWidget */;
+			targetProxy = FCE2448706B3DBD25DAD61CC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		68C255622C22365C9A75CFDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PixelPal/PixelPal.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = PixelPal/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		886034D47BB73E5EE2AB4B62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PixelPalWidget/PixelPalWidget.entitlements;
+				INFOPLIST_FILE = PixelPalWidget/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9457D24ED673C968679E96CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PixelPal/PixelPal.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = PixelPal/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		C32AB288F06767444C541288 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PixelPalWidget/PixelPalWidget.entitlements;
+				INFOPLIST_FILE = PixelPalWidget/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.pixelpalfit.app.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D10FC114C93EFE00857B68DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 2.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		FE1E39B613B27A6ADA68FC96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 2.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3D3F1BB6EBC63683017AFCDC /* Build configuration list for PBXNativeTarget "PixelPal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				68C255622C22365C9A75CFDB /* Debug */,
+				9457D24ED673C968679E96CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		96BC7B3556D4EF6B113D0BE7 /* Build configuration list for PBXNativeTarget "PixelPalWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C32AB288F06767444C541288 /* Debug */,
+				886034D47BB73E5EE2AB4B62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F7D4DB7827D257F63CE62AD5 /* Build configuration list for PBXProject "PixelStepper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D10FC114C93EFE00857B68DA /* Debug */,
+				FE1E39B613B27A6ADA68FC96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 173B5B473C8F07B4010DA083 /* Project object */;
+}

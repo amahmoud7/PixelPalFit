@@ -59,7 +59,7 @@ struct WeeklySummaryCard: View {
 
                 Text("steps this week")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.75))
+                    .foregroundColor(.white)
 
                 Spacer().frame(height: format == .story ? 14 : 8)
 
@@ -74,11 +74,11 @@ struct WeeklySummaryCard: View {
                     HStack {
                         Text("\(weeklyPercent)%")
                             .font(.system(size: 9, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(.white)
                         Spacer()
                         Text("\(data.weeklySteps.formatted()) / \(data.weeklyPhaseThreshold.formatted())")
                             .font(.system(size: 9, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(.white)
                     }
                 }
                 .padding(.horizontal, 24)
@@ -99,7 +99,7 @@ struct WeeklySummaryCard: View {
                 // Daily average
                 Text("\(dailyAverage.formatted()) avg/day")
                     .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(.white)
 
                 Spacer().frame(height: format == .story ? 6 : 4)
 

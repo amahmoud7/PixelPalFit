@@ -106,4 +106,27 @@ struct SharedData {
     static var hasSelectedGender: Bool {
         return loadGender() != nil
     }
+
+    // MARK: - Equipped Cosmetics
+
+    static func saveEquippedCosmetics(background: String?, hat: String?, accessory: String?, skin: String? = nil) {
+        guard let defaults = userDefaults else { return }
+        defaults.set(background, forKey: "cosmeticBackground")
+        defaults.set(hat, forKey: "cosmeticHat")
+        defaults.set(accessory, forKey: "cosmeticAccessory")
+        defaults.set(skin, forKey: "cosmeticSkin")
+
+        // Reload widget to show new cosmetics
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    static func loadEquippedCosmetics() -> (background: String?, hat: String?, accessory: String?, skin: String?) {
+        guard let defaults = userDefaults else { return (nil, nil, nil, nil) }
+        return (
+            defaults.string(forKey: "cosmeticBackground"),
+            defaults.string(forKey: "cosmeticHat"),
+            defaults.string(forKey: "cosmeticAccessory"),
+            defaults.string(forKey: "cosmeticSkin")
+        )
+    }
 }

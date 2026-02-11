@@ -1,9 +1,9 @@
 import ActivityKit
 import Foundation
 
-/// Attributes for the Pixel Pal Live Activity.
+/// Attributes for the Pixel Stepper Live Activity.
 /// Used by both the main app (to start/update) and the widget extension (to render).
-struct PixelPalAttributes: ActivityAttributes {
+struct PixelStepperAttributes: ActivityAttributes {
     /// Dynamic content that changes during the Live Activity lifecycle.
     public struct ContentState: Codable, Hashable {
         /// Current step count for today (for display).

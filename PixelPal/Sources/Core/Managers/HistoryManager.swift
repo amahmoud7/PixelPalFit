@@ -108,7 +108,57 @@ class HistoryManager: ObservableObject {
     var consecutiveMisses: Int {
         return history.countConsecutiveMisses()
     }
+
+    /// Gets current streak (consecutive days with goal met).
+    /// Premium users get one streak freeze per week — one missed day is forgiven.
+    var currentStreak: Int {
+        let isPremium = PersistenceManager.shared.entitlements.isPremium
+        guard isPremium else {
+            return history.countConsecutiveGoalsMet()
+        }
+
+        let (streak, frozenDate) = history.countConsecutiveGoalsMetWithFreeze()
+
+        // If the freeze was actually used on a date, record it (once per week)
+        if let frozenDate = frozenDate {
+            let progress = PersistenceManager.shared.progressState
+            let needsRecording: Bool
+            if let lastUsed = progress.streakFreezeUsedDate {
+                let daysSince = Calendar.current.dateComponents([.day], from: lastUsed, to: Date()).day ?? 0
+                // Only allow one freeze per 7-day rolling window
+                needsRecording = daysSince >= 7
+            } else {
+                needsRecording = true
+            }
+
+            if needsRecording {
+                PersistenceManager.shared.updateProgress { state in
+                    state.streakFreezeUsedDate = frozenDate
+                }
+            } else {
+                // Freeze already used this week — fall back to regular streak
+                return history.countConsecutiveGoalsMet()
+            }
+        }
+
+        return streak
+    }
     
+    /// Whether the streak freeze is available this week (premium only).
+    var isStreakFreezeAvailable: Bool {
+        guard PersistenceManager.shared.entitlements.isPremium else { return false }
+        guard let lastUsed = PersistenceManager.shared.progressState.streakFreezeUsedDate else { return true }
+        let daysSince = Calendar.current.dateComponents([.day], from: lastUsed, to: Date()).day ?? 0
+        return daysSince >= 7
+    }
+
+    /// Whether the streak freeze is currently active (protecting the streak right now).
+    var isStreakFreezeActive: Bool {
+        guard PersistenceManager.shared.entitlements.isPremium else { return false }
+        let (_, frozenDate) = history.countConsecutiveGoalsMetWithFreeze()
+        return frozenDate != nil
+    }
+
     /// Backfills missing days with placeholder data.
     /// Call when app has been killed for several days.
     func backfillMissingDays() {

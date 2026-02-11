@@ -1,9 +1,9 @@
 import SwiftUI
 
 @main
-struct PixelPalApp: App {
+struct PixelStepperApp: App {
     @StateObject private var healthManager = HealthKitManager()
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()

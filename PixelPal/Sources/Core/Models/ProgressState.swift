@@ -20,8 +20,35 @@ struct ProgressState: Codable, Equatable {
     /// Whether the user has seen the paywall (shown after Phase 2 unlock).
     var hasSeenPaywall: Bool
 
+    /// Last time the paywall was shown (for cooldown-based re-engagement).
+    var lastPaywallDate: Date?
+
     /// Today's step count (for display, separate from cumulative).
     var todaySteps: Int
+
+    /// Whether we've already requested an App Store review.
+    var hasRequestedReview: Bool
+
+    /// Current streak of consecutive days meeting the goal.
+    var currentStreak: Int
+
+    /// Longest streak ever achieved.
+    var longestStreak: Int
+
+    /// Best single-day step count.
+    var bestDaySteps: Int
+
+    /// Date of best single-day step count.
+    var bestDayDate: Date?
+
+    /// Total number of days with goal met.
+    var totalActiveDays: Int
+
+    /// Step coin balance for cosmetic shop.
+    var stepCoinBalance: Int
+
+    /// Date when streak freeze was last used (resets weekly).
+    var streakFreezeUsedDate: Date?
 
     /// Creates initial progress state for a new user.
     static func createNew() -> ProgressState {
@@ -30,8 +57,74 @@ struct ProgressState: Codable, Equatable {
             lastHealthKitSync: nil,
             currentPhase: 1,
             hasSeenPaywall: false,
-            todaySteps: 0
+            lastPaywallDate: nil,
+            todaySteps: 0,
+            hasRequestedReview: false,
+            currentStreak: 0,
+            longestStreak: 0,
+            bestDaySteps: 0,
+            bestDayDate: nil,
+            totalActiveDays: 0,
+            stepCoinBalance: 0
         )
+    }
+
+    init(
+        totalStepsSinceStart: Int,
+        lastHealthKitSync: Date?,
+        currentPhase: Int,
+        hasSeenPaywall: Bool,
+        lastPaywallDate: Date? = nil,
+        todaySteps: Int,
+        hasRequestedReview: Bool = false,
+        currentStreak: Int = 0,
+        longestStreak: Int = 0,
+        bestDaySteps: Int = 0,
+        bestDayDate: Date? = nil,
+        totalActiveDays: Int = 0,
+        stepCoinBalance: Int = 0,
+        streakFreezeUsedDate: Date? = nil
+    ) {
+        self.totalStepsSinceStart = totalStepsSinceStart
+        self.lastHealthKitSync = lastHealthKitSync
+        self.currentPhase = currentPhase
+        self.hasSeenPaywall = hasSeenPaywall
+        self.lastPaywallDate = lastPaywallDate
+        self.todaySteps = todaySteps
+        self.hasRequestedReview = hasRequestedReview
+        self.currentStreak = currentStreak
+        self.longestStreak = longestStreak
+        self.bestDaySteps = bestDaySteps
+        self.bestDayDate = bestDayDate
+        self.totalActiveDays = totalActiveDays
+        self.stepCoinBalance = stepCoinBalance
+        self.streakFreezeUsedDate = streakFreezeUsedDate
+    }
+
+    // Custom Codable to handle backward compatibility for new fields
+    enum CodingKeys: String, CodingKey {
+        case totalStepsSinceStart, lastHealthKitSync, currentPhase
+        case hasSeenPaywall, lastPaywallDate, todaySteps
+        case hasRequestedReview, currentStreak, longestStreak
+        case bestDaySteps, bestDayDate, totalActiveDays, stepCoinBalance, streakFreezeUsedDate
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        totalStepsSinceStart = try container.decode(Int.self, forKey: .totalStepsSinceStart)
+        lastHealthKitSync = try container.decodeIfPresent(Date.self, forKey: .lastHealthKitSync)
+        currentPhase = try container.decode(Int.self, forKey: .currentPhase)
+        hasSeenPaywall = try container.decode(Bool.self, forKey: .hasSeenPaywall)
+        lastPaywallDate = try container.decodeIfPresent(Date.self, forKey: .lastPaywallDate)
+        todaySteps = try container.decode(Int.self, forKey: .todaySteps)
+        hasRequestedReview = try container.decodeIfPresent(Bool.self, forKey: .hasRequestedReview) ?? false
+        currentStreak = try container.decodeIfPresent(Int.self, forKey: .currentStreak) ?? 0
+        longestStreak = try container.decodeIfPresent(Int.self, forKey: .longestStreak) ?? 0
+        bestDaySteps = try container.decodeIfPresent(Int.self, forKey: .bestDaySteps) ?? 0
+        bestDayDate = try container.decodeIfPresent(Date.self, forKey: .bestDayDate)
+        totalActiveDays = try container.decodeIfPresent(Int.self, forKey: .totalActiveDays) ?? 0
+        stepCoinBalance = try container.decodeIfPresent(Int.self, forKey: .stepCoinBalance) ?? 0
+        streakFreezeUsedDate = try container.decodeIfPresent(Date.self, forKey: .streakFreezeUsedDate)
     }
 
     /// Updates the phase based on total steps and premium status.

@@ -79,7 +79,12 @@
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "6738429561",
-          "introductoryOffer" : null,
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "FREE_TRIAL_MONTHLY",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
           "localizations" : [
             {
               "description" : "Full access to all evolution phases",
@@ -104,7 +109,12 @@
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "6738429562",
-          "introductoryOffer" : null,
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "FREE_TRIAL_YEARLY",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
           "localizations" : [
             {
               "description" : "Full access to all evolution phases - best value!",
