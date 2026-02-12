@@ -4,6 +4,7 @@ import Foundation
 @MainActor
 class MissionManager: ObservableObject {
     @Published var missions: [DailyMission] = []
+    @Published var weeklyChallenge: WeeklyChallenge?
 
     private let persistence = PersistenceManager.shared
     private let dailyGoal = 7500
@@ -14,10 +15,18 @@ class MissionManager: ObservableObject {
         return formatter.string(from: Date())
     }
 
+    private var weekString: String {
+        let calendar = Calendar.current
+        let year = calendar.component(.yearForWeekOfYear, from: Date())
+        let week = calendar.component(.weekOfYear, from: Date())
+        return "\(year)-W\(String(format: "%02d", week))"
+    }
+
     // MARK: - Public API
 
-    /// Loads existing missions for today or generates new ones.
+    /// Loads existing missions for today or generates new ones. Also loads weekly challenge for premium.
     func loadOrGenerateMissions(weeklyAverage: Int) {
+        loadOrGenerateWeeklyChallenge(weeklyAverage: weeklyAverage)
         let isPremium = PersistenceManager.shared.entitlements.isPremium
         let expectedCount = isPremium ? 5 : 3
 
@@ -68,6 +77,31 @@ class MissionManager: ObservableObject {
 
         if changed {
             saveMissions()
+        }
+    }
+
+    /// Updates weekly challenge progress.
+    func updateWeeklyProgress(weeklySteps: Int, activeDaysThisWeek: Int, bestDayThisWeek: Int) {
+        guard var challenge = weeklyChallenge, !challenge.isCompleted else { return }
+
+        let newProgress: Int
+        switch challenge.type {
+        case .totalSteps:
+            newProgress = weeklySteps
+        case .activeDays:
+            newProgress = activeDaysThisWeek
+        case .streakWeek:
+            newProgress = activeDaysThisWeek
+        case .bigDay:
+            newProgress = bestDayThisWeek >= 10_000 ? 1 : 0
+        case .consistentWeek:
+            newProgress = activeDaysThisWeek
+        }
+
+        if newProgress != challenge.progress {
+            challenge.progress = newProgress
+            weeklyChallenge = challenge
+            saveWeeklyChallenge()
         }
     }
 
@@ -139,6 +173,100 @@ class MissionManager: ObservableObject {
             coinReward: coinReward,
             dateString: todayString
         )
+    }
+
+    // MARK: - Weekly Challenge
+
+    private func loadOrGenerateWeeklyChallenge(weeklyAverage: Int) {
+        guard PersistenceManager.shared.entitlements.isPremium else {
+            weeklyChallenge = nil
+            return
+        }
+
+        if let saved = loadWeeklyChallenge(), saved.weekString == weekString {
+            weeklyChallenge = saved.challenge
+        } else {
+            weeklyChallenge = generateWeeklyChallenge(weeklyAverage: weeklyAverage)
+            saveWeeklyChallenge()
+        }
+    }
+
+    private func generateWeeklyChallenge(weeklyAverage: Int) -> WeeklyChallenge {
+        let seed = weekString.hashValue
+        var rng = SeededRandomNumberGenerator(seed: UInt64(bitPattern: Int64(seed)))
+        let types = WeeklyChallengeType.allCases
+        let type = types[Int.random(in: 0..<types.count, using: &rng)]
+
+        let (title, description, target, coinReward): (String, String, Int, Int)
+
+        switch type {
+        case .totalSteps:
+            let baseTarget = max(35_000, (weeklyAverage / 1000) * 1000)
+            let scaled = baseTarget + Int.random(in: 0...10_000, using: &rng)
+            let rounded = (scaled / 5000) * 5000
+            title = "Marathon Week"
+            description = "Walk \(rounded.formatted()) total steps this week"
+            target = rounded
+            coinReward = 500
+        case .activeDays:
+            title = "Goal Crusher"
+            description = "Meet your daily goal 5 days this week"
+            target = 5
+            coinReward = 400
+        case .streakWeek:
+            title = "Perfect Week"
+            description = "Meet your daily goal every day this week"
+            target = 7
+            coinReward = 750
+        case .bigDay:
+            title = "Big Day"
+            description = "Hit 10,000+ steps in a single day"
+            target = 1
+            coinReward = 300
+        case .consistentWeek:
+            title = "Steady Pace"
+            description = "Walk 5,000+ steps every day this week"
+            target = 7
+            coinReward = 600
+        }
+
+        return WeeklyChallenge(
+            id: "weekly_\(weekString)_\(type.rawValue)",
+            title: title,
+            description: description,
+            target: target,
+            progress: 0,
+            coinReward: coinReward,
+            weekString: weekString,
+            type: type
+        )
+    }
+
+    private func saveWeeklyChallenge() {
+        guard let challenge = weeklyChallenge else { return }
+        let state = WeeklyChallengeState(challenge: challenge, weekString: weekString)
+        let url = weeklyFileURL
+        do {
+            let data = try JSONEncoder().encode(state)
+            try data.write(to: url, options: .atomic)
+        } catch {
+            print("MissionManager: Failed to save weekly: \(error)")
+        }
+    }
+
+    private func loadWeeklyChallenge() -> WeeklyChallengeState? {
+        let url = weeklyFileURL
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        return try? JSONDecoder().decode(WeeklyChallengeState.self, from: data)
+    }
+
+    private var weeklyFileURL: URL {
+        let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        let dir = urls[0].appendingPathComponent("PixelPal", isDirectory: true)
+        if !FileManager.default.fileExists(atPath: dir.path) {
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        }
+        return dir.appendingPathComponent("WeeklyChallenge.json")
     }
 
     // MARK: - Persistence

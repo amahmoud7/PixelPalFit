@@ -38,8 +38,9 @@ struct ContentView: View {
         }
         .onAppear {
             appState.loadSavedData()
-            if healthManager.isAuthorized {
-                healthManager.fetchData()
+            // Always request authorization on launch — idempotent if already granted.
+            // For HealthKit read permissions, this won't re-show the dialog if already responded.
+            healthManager.requestAuthorization { _ in
                 appState.fetchCumulativeSteps(healthManager: healthManager)
             }
             Task {
@@ -72,8 +73,7 @@ struct ContentView: View {
     }
 
     private var isOnboardingComplete: Bool {
-        let profile = PersistenceManager.shared.userProfile
-        return profile != nil && healthManager.isAuthorized
+        PersistenceManager.shared.userProfile != nil
     }
 }
 

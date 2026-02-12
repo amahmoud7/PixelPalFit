@@ -141,6 +141,9 @@ class AppStateManager: ObservableObject {
             awardCoins(mission.coinReward)
         }
 
+        // Update weekly challenge
+        updateWeeklyChallengeProgress(todaySteps: todaySteps)
+
         // Check for celebrations
         checkCelebrations(todaySteps: todaySteps, previousTodaySteps: previousTodaySteps)
 
@@ -193,6 +196,27 @@ class AppStateManager: ObservableObject {
     }
 
     // MARK: - Private Helpers
+
+    private func updateWeeklyChallengeProgress(todaySteps: Int) {
+        guard let challenge = missionManager.weeklyChallenge, !challenge.isCompleted else { return }
+
+        let weekData = HistoryManager.shared.history.weekViewData()
+        let activeDays = weekData.filter { $0.isGoalMet }.count
+        let bestDay = weekData.map(\.steps).max() ?? todaySteps
+
+        let wasCompleted = challenge.isCompleted
+        missionManager.updateWeeklyProgress(
+            weeklySteps: weeklySteps,
+            activeDaysThisWeek: activeDays,
+            bestDayThisWeek: bestDay
+        )
+
+        // Award coins if just completed
+        if let updated = missionManager.weeklyChallenge, updated.isCompleted && !wasCompleted {
+            awardCoins(updated.coinReward)
+            celebrationManager.tryTrigger(.dailyGoalMet(steps: todaySteps))
+        }
+    }
 
     private func updateStreakPersistence() {
         let streak = HistoryManager.shared.currentStreak
@@ -342,10 +366,11 @@ class AppStateManager: ObservableObject {
     // MARK: - Coins
 
     func awardCoins(_ amount: Int) {
+        let finalAmount = storeManager.isPremium ? amount * 2 : amount
         PersistenceManager.shared.updateProgress { state in
-            state.stepCoinBalance += amount
+            state.stepCoinBalance += finalAmount
         }
-        stepCoinToast = amount
+        stepCoinToast = finalAmount
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             self?.stepCoinToast = nil
         }

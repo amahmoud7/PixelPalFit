@@ -13,8 +13,14 @@ class HealthKitManager: ObservableObject {
     /// Cumulative steps since user profile creation.
     @Published var cumulativeSteps: Int = 0
 
-    /// Whether HealthKit is authorized.
+    /// Whether HealthKit authorization has been requested (not whether granted —
+    /// Apple doesn't expose read permission status for privacy).
     @Published var isAuthorized: Bool = false
+
+    /// Whether HealthKit is available on this device.
+    var isHealthDataAvailable: Bool {
+        HKHealthStore.isHealthDataAvailable()
+    }
 
     /// Last sync timestamp.
     @Published var lastSync: Date?
@@ -25,6 +31,8 @@ class HealthKitManager: ObservableObject {
     /// Cached cumulative value and timestamp.
     private var cumulativeCache: (steps: Int, timestamp: Date)?
 
+    /// Requests HealthKit authorization and fetches data.
+    /// Safe to call on every app launch — idempotent if already granted.
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         guard HKHealthStore.isHealthDataAvailable() else {
             completion(false)
@@ -37,10 +45,11 @@ class HealthKitManager: ObservableObject {
 
         healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
             DispatchQueue.main.async {
+                // Note: For read-only permissions, success=true even if user denied.
+                // This is Apple's privacy-by-design — we can't detect read denial.
                 self.isAuthorized = success
-                if success {
-                    self.fetchData()
-                }
+                // Always try to fetch data — if denied, queries return 0 silently.
+                self.fetchData()
                 completion(success)
             }
         }

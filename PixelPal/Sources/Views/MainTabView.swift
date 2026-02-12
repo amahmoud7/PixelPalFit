@@ -29,7 +29,7 @@ struct MainTabView: View {
             tabBar
         }
         .overlay {
-            // Celebration overlay
+            // Celebration overlay (highest priority)
             if let event = appState.showCelebration {
                 CelebrationOverlay(event: event) {
                     appState.showCelebration = nil
@@ -39,12 +39,12 @@ struct MainTabView: View {
                 }
             }
 
-            // Step Moment overlay
-            if appState.showStepMoment {
+            // Step Moment overlay (only when no celebration showing)
+            if appState.showStepMoment && appState.showCelebration == nil {
                 StepMomentView()
             }
 
-            // Coin toast
+            // Coin toast (visible above tab bar)
             if let coins = appState.stepCoinToast {
                 VStack {
                     Spacer()
@@ -60,7 +60,7 @@ struct MainTabView: View {
                     .padding(.vertical, 10)
                     .background(Color.black.opacity(0.8))
                     .clipShape(Capsule())
-                    .padding(.bottom, 100)
+                    .padding(.bottom, 160)
                 }
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 .animation(.easeInOut(duration: 0.3), value: appState.stepCoinToast != nil)

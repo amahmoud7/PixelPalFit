@@ -185,24 +185,45 @@ struct ProfileView: View {
     private var premiumCard: some View {
         Group {
             if appState.storeManager.isPremium {
-                HStack(spacing: 12) {
-                    Image(systemName: "crown.fill")
-                        .font(.system(size: 18))
-                        .foregroundColor(.yellow)
+                VStack(spacing: 0) {
+                    HStack(spacing: 12) {
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.yellow)
 
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Premium Active")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundColor(.white)
-                        Text("All features unlocked")
-                            .font(.system(size: 10, weight: .medium))
-                            .foregroundColor(.white.opacity(0.4))
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Premium Active")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.white)
+                            Text("All features unlocked")
+                                .font(.system(size: 10, weight: .medium))
+                                .foregroundColor(.white.opacity(0.4))
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(Color(red: 0.2, green: 0.78, blue: 0.35))
                     }
 
-                    Spacer()
+                    Divider()
+                        .background(Color.white.opacity(0.06))
+                        .padding(.vertical, 10)
 
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(Color(red: 0.2, green: 0.78, blue: 0.35))
+                    Button(action: openSubscriptionManagement) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "gear")
+                                .font(.system(size: 12))
+                                .foregroundColor(.white.opacity(0.4))
+                            Text("Manage Subscription")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.white.opacity(0.5))
+                            Spacer()
+                            Image(systemName: "arrow.up.right")
+                                .font(.system(size: 10))
+                                .foregroundColor(.white.opacity(0.3))
+                        }
+                    }
                 }
                 .padding(14)
                 .background(
@@ -290,6 +311,11 @@ struct ProfileView: View {
     }
 
     // MARK: - Helpers
+
+    private func openSubscriptionManagement() {
+        guard let url = URL(string: "https://apps.apple.com/account/subscriptions") else { return }
+        UIApplication.shared.open(url)
+    }
 
     private func toggleLiveActivity() {
         if appState.liveActivityManager.isActive {

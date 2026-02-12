@@ -35,6 +35,9 @@ struct CosmeticShopView: View {
                 // Item grid
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 16) {
+                        // Featured rotation
+                        featuredSection
+
                         itemGrid
 
                         // Seasonal section
@@ -123,6 +126,83 @@ struct CosmeticShopView: View {
             }
         }
         .padding(.horizontal, 20)
+    }
+
+    // MARK: - Featured Section
+
+    private var featuredSection: some View {
+        let featured = CosmeticCatalog.featuredItems(isPremium: appState.storeManager.isPremium)
+        let timeLeft = CosmeticCatalog.timeUntilNextRotation()
+        let hoursLeft = Int(timeLeft / 3600)
+
+        return VStack(spacing: 10) {
+            HStack {
+                HStack(spacing: 6) {
+                    Image(systemName: "star.fill")
+                        .font(.system(size: 10))
+                        .foregroundColor(.orange)
+                    Text("FEATURED")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.orange)
+                        .tracking(1.0)
+                }
+
+                Spacer()
+
+                HStack(spacing: 4) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 9))
+                    Text(hoursLeft > 24 ? "\(hoursLeft / 24)d \(hoursLeft % 24)h" : "\(hoursLeft)h left")
+                        .font(.system(size: 10, weight: .medium))
+                }
+                .foregroundColor(.white.opacity(0.35))
+
+                if appState.storeManager.isPremium {
+                    Text("EARLY ACCESS")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundColor(.yellow)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.yellow.opacity(0.15))
+                        .clipShape(Capsule())
+                }
+            }
+            .padding(.horizontal, 16)
+
+            let columns = [
+                GridItem(.flexible(), spacing: 10),
+                GridItem(.flexible(), spacing: 10),
+                GridItem(.flexible(), spacing: 10)
+            ]
+
+            LazyVGrid(columns: columns, spacing: 12) {
+                ForEach(featured) { item in
+                    Button(action: { selectedItem = item }) {
+                        CosmeticItemCard(
+                            item: item,
+                            isOwned: cosmeticManager.inventory.ownedItemIDs.contains(item.id),
+                            isEquipped: cosmeticManager.currentLoadout.equipped(for: item.category) == item.id,
+                            eligibility: cosmeticManager.canPurchase(
+                                item,
+                                balance: balance,
+                                isPremium: appState.storeManager.isPremium,
+                                phase: appState.currentPhase,
+                                streak: appState.currentStreak,
+                                totalSteps: PersistenceManager.shared.progressState.totalStepsSinceStart
+                            ),
+                            isFeatured: true
+                        )
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 16)
+
+            Rectangle()
+                .fill(Color.white.opacity(0.04))
+                .frame(height: 1)
+                .padding(.horizontal, 16)
+        }
     }
 
     // MARK: - Item Grid

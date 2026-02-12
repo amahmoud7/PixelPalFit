@@ -277,6 +277,71 @@ struct CosmeticCatalog {
         all.filter { $0.isLimited && isInSeason($0) }
     }
 
+    // MARK: - Featured Rotation
+
+    /// Returns 3 featured items that rotate every 3 days.
+    /// Premium users see next rotation 24hrs early.
+    static func featuredItems(isPremium: Bool) -> [CosmeticItem] {
+        let calendar = Calendar.current
+        let now = Date()
+
+        // Calculate rotation period (3-day blocks since a fixed epoch)
+        guard let epoch = calendar.date(from: DateComponents(year: 2026, month: 1, day: 1)) else {
+            return Array(all.prefix(3))
+        }
+        let daysSinceEpoch = calendar.dateComponents([.day], from: epoch, to: now).day ?? 0
+
+        // Premium users see next rotation 24hrs early
+        let effectiveDays = isPremium ? daysSinceEpoch + 1 : daysSinceEpoch
+        let rotationIndex = effectiveDays / 3
+
+        // Use rotation index as seed for deterministic selection
+        var rng = SeededRNG(seed: UInt64(bitPattern: Int64(rotationIndex &* 2654435761)))
+
+        // Pool: non-limited items with rarity uncommon or higher
+        let pool = all.filter { !$0.isLimited && $0.rarity != .common }
+        guard pool.count >= 3 else { return Array(pool.prefix(3)) }
+
+        var shuffled = pool.shuffled(using: &rng)
+        // Ensure variety — pick from different categories if possible
+        var result: [CosmeticItem] = []
+        var usedCategories = Set<CosmeticCategory>()
+
+        for item in shuffled {
+            if result.count >= 3 { break }
+            if result.count < 2 && usedCategories.contains(item.category) { continue }
+            result.append(item)
+            usedCategories.insert(item.category)
+        }
+
+        // Fill remaining if we couldn't get category variety
+        if result.count < 3 {
+            for item in shuffled where !result.contains(where: { $0.id == item.id }) {
+                result.append(item)
+                if result.count >= 3 { break }
+            }
+        }
+
+        return result
+    }
+
+    /// Time until next featured rotation.
+    static func timeUntilNextRotation() -> TimeInterval {
+        let calendar = Calendar.current
+        let now = Date()
+        guard let epoch = calendar.date(from: DateComponents(year: 2026, month: 1, day: 1)) else {
+            return 3 * 24 * 3600
+        }
+        let daysSinceEpoch = calendar.dateComponents([.day], from: epoch, to: now).day ?? 0
+        let currentBlock = daysSinceEpoch / 3
+        let nextBlockStart = (currentBlock + 1) * 3
+
+        guard let nextDate = calendar.date(byAdding: .day, value: nextBlockStart, to: epoch) else {
+            return 3 * 24 * 3600
+        }
+        return nextDate.timeIntervalSince(now)
+    }
+
     // MARK: - Helpers
 
     private static func isInSeason(_ item: CosmeticItem) -> Bool {
@@ -310,12 +375,30 @@ struct CosmeticCatalog {
     }
 }
 
+// MARK: - Seeded RNG for Catalog
+
+private struct SeededRNG: RandomNumberGenerator {
+    private var state: UInt64
+
+    init(seed: UInt64) {
+        state = seed == 0 ? 1 : seed
+    }
+
+    mutating func next() -> UInt64 {
+        state &+= 0x9e3779b97f4a7c15
+        var z = state
+        z = (z ^ (z >> 30)) &* 0xbf58476d1ce4e5b9
+        z = (z ^ (z >> 27)) &* 0x94d049bb133111eb
+        return z ^ (z >> 31)
+    }
+}
+
 // MARK: - Date Helper
 
 /// Creates a Date with just month and day components for seasonal comparison.
 private func makeDateComponents(month: Int, day: Int) -> Date {
     var components = DateComponents()
-    components.year = 2026
+    components.year = Calendar.current.component(.year, from: Date())
     components.month = month
     components.day = day
     return Calendar.current.date(from: components) ?? Date()

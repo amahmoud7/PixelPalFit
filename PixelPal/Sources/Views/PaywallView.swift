@@ -89,6 +89,12 @@ struct PaywallView: View {
                         BenefitRow(icon: "crown", color: Color(red: 1.0, green: 0.84, blue: 0.0),
                                    title: "Exclusive Cosmetics",
                                    desc: "Premium hats, backgrounds & accessories")
+                        BenefitRow(icon: "2.circle.fill", color: Color(red: 1.0, green: 0.84, blue: 0.0),
+                                   title: "2x Step Coins",
+                                   desc: "Double coins from all rewards")
+                        BenefitRow(icon: "trophy.fill", color: .orange,
+                                   title: "Weekly Challenge",
+                                   desc: "Exclusive big goal with 500+ coin reward")
                     }
                     .padding(.horizontal, 20)
 

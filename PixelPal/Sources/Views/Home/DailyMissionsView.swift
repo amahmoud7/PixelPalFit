@@ -43,11 +43,124 @@ struct DailyMissionsView: View {
                 questRow(mission)
             }
 
+            // Weekly challenge (premium only)
+            if let challenge = appState.missionManager.weeklyChallenge {
+                weeklyRow(challenge)
+            }
+
             // Premium quests divider + locked rows
             if !appState.storeManager.isPremium {
                 premiumQuestsSection
             }
         }
+    }
+
+    // MARK: - Weekly Challenge Row
+
+    @ViewBuilder
+    private func weeklyRow(_ challenge: WeeklyChallenge) -> some View {
+        let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
+
+        VStack(spacing: 0) {
+            // Header
+            HStack(spacing: 6) {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 9))
+                    .foregroundColor(gold)
+                Text("WEEKLY CHALLENGE")
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundColor(gold.opacity(0.8))
+                    .tracking(1)
+                Spacer()
+                Text(daysLeftText)
+                    .font(.system(size: 9, weight: .medium))
+                    .foregroundColor(.white.opacity(0.3))
+            }
+            .padding(.horizontal, 14)
+            .padding(.top, 10)
+            .padding(.bottom, 6)
+
+            HStack(spacing: 10) {
+                // Icon
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(gold.opacity(challenge.isCompleted ? 0.2 : 0.1))
+                    .frame(width: 28, height: 28)
+                    .overlay(
+                        Image(systemName: challenge.isCompleted ? "checkmark" : challenge.type.icon)
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(challenge.isCompleted ? Color(red: 0.2, green: 0.78, blue: 0.35) : gold)
+                    )
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(challenge.title)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundColor(challenge.isCompleted ? .white.opacity(0.5) : .white)
+                        .strikethrough(challenge.isCompleted, color: .white.opacity(0.3))
+
+                    Text(challenge.description)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.white.opacity(0.4))
+
+                    if !challenge.isCompleted {
+                        Text("\(challenge.progress.formatted()) / \(challenge.target.formatted())")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(.white.opacity(0.3))
+                    }
+                }
+
+                Spacer()
+
+                Text("\(challenge.coinReward)")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(gold)
+                + Text(" \u{1FA99}")
+                    .font(.system(size: 10))
+            }
+            .padding(.horizontal, 14)
+            .padding(.bottom, 10)
+        }
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(
+                    LinearGradient(
+                        colors: [gold.opacity(0.06), gold.opacity(0.02)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(gold.opacity(0.15), lineWidth: 1)
+                )
+        )
+        .overlay {
+            if !challenge.isCompleted && challenge.progress > 0 {
+                GeometryReader { geo in
+                    VStack {
+                        Spacer()
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(Color.white.opacity(0.06))
+                            .frame(height: 3)
+                            .overlay(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 2)
+                                    .fill(gold)
+                                    .frame(width: geo.size.width * challenge.progressFraction)
+                                    .shadow(color: gold.opacity(0.4), radius: 3)
+                            }
+                            .padding(.horizontal, 14)
+                    }
+                    .padding(.bottom, 2)
+                }
+            }
+        }
+    }
+
+    private var daysLeftText: String {
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: Date())
+        // Sunday=1, Saturday=7. Days until Sunday (end of week)
+        let daysLeft = weekday == 1 ? 0 : (8 - weekday)
+        return daysLeft == 0 ? "Ends today" : "\(daysLeft)d left"
     }
 
     // MARK: - Quest Row

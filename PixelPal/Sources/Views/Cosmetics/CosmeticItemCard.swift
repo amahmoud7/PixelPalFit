@@ -6,6 +6,7 @@ struct CosmeticItemCard: View {
     let isOwned: Bool
     let isEquipped: Bool
     let eligibility: PurchaseEligibility
+    var isFeatured: Bool = false
 
     var body: some View {
         VStack(spacing: 6) {
@@ -36,6 +37,20 @@ struct CosmeticItemCard: View {
                                 .font(.system(size: 14))
                                 .foregroundColor(Color(red: 0.2, green: 0.78, blue: 0.35))
                                 .padding(4)
+                        }
+                        Spacer()
+                    }
+                }
+
+                // Featured star
+                if isFeatured {
+                    VStack {
+                        HStack {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 8))
+                                .foregroundColor(.orange)
+                                .padding(4)
+                            Spacer()
                         }
                         Spacer()
                     }

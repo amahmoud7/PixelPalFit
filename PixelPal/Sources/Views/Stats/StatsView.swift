@@ -66,6 +66,25 @@ private struct PhaseProgressCard: View {
         }
     }
 
+    private var phaseName: String {
+        switch currentPhase {
+        case 1: return "Seedling"
+        case 2: return "Growing"
+        case 3: return "Thriving"
+        case 4: return "Legendary"
+        default: return ""
+        }
+    }
+
+    private var nextPhaseName: String {
+        switch currentPhase {
+        case 1: return "Growing"
+        case 2: return "Thriving"
+        case 3: return "Legendary"
+        default: return ""
+        }
+    }
+
     var body: some View {
         VStack(spacing: 12) {
             HStack {
@@ -73,36 +92,77 @@ private struct PhaseProgressCard: View {
                     .font(.headline)
                     .foregroundColor(.white)
                 Spacer()
-                Text("Phase \(currentPhase)")
+                Text("Phase \(currentPhase) · \(phaseName)")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .foregroundColor(progressColor)
             }
 
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.white.opacity(0.1))
-                        .frame(height: 8)
-
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(progressColor)
-                        .frame(width: geometry.size.width * progress, height: 8)
-                }
-            }
-            .frame(height: 8)
-
             if currentPhase < 4 {
+                // Step count display
+                HStack(alignment: .firstTextBaseline, spacing: 2) {
+                    Text(weeklySteps.formatted())
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                    Text("/ \(nextThreshold.formatted()) steps")
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.4))
+                    Spacer()
+                    Text("\(Int(progress * 100))%")
+                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                        .foregroundColor(progressColor)
+                }
+
+                // Progress bar
+                GeometryReader { geometry in
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color.white.opacity(0.1))
+                            .frame(height: 8)
+
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(
+                                LinearGradient(
+                                    colors: [progressColor, progressColor.opacity(0.7)],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(width: geometry.size.width * progress, height: 8)
+                            .shadow(color: progressColor.opacity(0.3), radius: 4)
+                    }
+                }
+                .frame(height: 8)
+
                 if currentPhase >= 2 && !isPremium {
                     Text("Unlock Premium for Phase \(currentPhase + 1)")
                         .font(.caption2)
                         .foregroundColor(.purple.opacity(0.8))
                 } else {
-                    Text("\(weeklySteps.formatted()) / \(nextThreshold.formatted()) this week")
+                    let remaining = max(0, nextThreshold - weeklySteps)
+                    Text("\(remaining.formatted()) steps to \(nextPhaseName) · resets weekly")
                         .font(.caption2)
-                        .foregroundColor(.gray.opacity(0.8))
+                        .foregroundColor(.white.opacity(0.35))
                 }
             } else {
+                HStack(alignment: .firstTextBaseline, spacing: 2) {
+                    Text(weeklySteps.formatted())
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                    Text("steps this week")
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.4))
+                    Spacer()
+                }
+
+                GeometryReader { geometry in
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(progressColor)
+                        .frame(height: 8)
+                        .shadow(color: progressColor.opacity(0.3), radius: 4)
+                }
+                .frame(height: 8)
+
                 Text("Maximum evolution reached!")
                     .font(.caption2)
                     .foregroundColor(.orange.opacity(0.8))
