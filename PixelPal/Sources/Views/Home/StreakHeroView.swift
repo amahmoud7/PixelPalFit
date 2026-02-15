@@ -7,6 +7,8 @@ struct StreakHeroView: View {
     let dailyGoal: Int
     let missionsCompleted: Int
     let missionsTotal: Int
+    var isPremium: Bool = false
+    var onUpgradeTap: (() -> Void)?
 
     private var progress: Double {
         min(Double(todaySteps) / Double(dailyGoal), 1.0)
@@ -253,7 +255,9 @@ struct StreakHeroView: View {
             if isAtRisk {
                 StreakAtRiskView(
                     stepsRemaining: dailyGoal - todaySteps,
-                    streak: streak
+                    streak: streak,
+                    isPremium: isPremium,
+                    onUpgradeTap: onUpgradeTap
                 )
             }
         }
@@ -285,6 +289,8 @@ struct StreakHeroView: View {
 struct StreakAtRiskView: View {
     let stepsRemaining: Int
     let streak: Int
+    var isPremium: Bool = false
+    var onUpgradeTap: (() -> Void)?
     @State private var isPulsing = false
 
     private var walkMinutes: Int {
@@ -292,26 +298,48 @@ struct StreakAtRiskView: View {
     }
 
     var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundColor(.orange)
-                .font(.system(size: 14))
-                .scaleEffect(isPulsing ? 1.1 : 1.0)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Streak at risk")
-                    .font(.system(size: 12, weight: .semibold))
+        VStack(spacing: 0) {
+            HStack(spacing: 10) {
+                Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundColor(.orange)
+                    .font(.system(size: 14))
+                    .scaleEffect(isPulsing ? 1.1 : 1.0)
 
-                Text("\(stepsRemaining.formatted()) steps to save it — ~\(walkMinutes) min walk")
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(.orange.opacity(0.7))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Streak at risk")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.orange)
+
+                    Text("\(stepsRemaining.formatted()) steps to save it — ~\(walkMinutes) min walk")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(.orange.opacity(0.7))
+                }
+
+                Spacer()
             }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
 
-            Spacer()
+            if !isPremium, let onUpgradeTap {
+                Button(action: onUpgradeTap) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "shield.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(Color(red: 0.0, green: 0.83, blue: 1.0))
+                        Text("Premium includes Streak Freeze")
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundColor(.white.opacity(0.6))
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.3))
+                    }
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 8)
+                    .background(Color.white.opacity(0.04))
+                }
+            }
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 10)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.orange.opacity(0.08))
@@ -320,6 +348,7 @@ struct StreakAtRiskView: View {
                         .stroke(Color.orange.opacity(0.2), lineWidth: 1)
                 )
         )
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .onAppear {
             withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
                 isPulsing = true

@@ -61,10 +61,7 @@ struct WardrobeView: View {
             VStack(spacing: 4) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(equippedItem != nil
-                            ? equippedItem!.rarity.color.opacity(0.08)
-                            : Color.white.opacity(0.04)
-                        )
+                        .fill(equippedItem?.rarity.color.opacity(0.08) ?? Color.white.opacity(0.04))
                         .frame(width: 56, height: 56)
 
                     if let item = equippedItem {
@@ -82,9 +79,7 @@ struct WardrobeView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(
-                            equippedItem != nil
-                                ? equippedItem!.rarity.color.opacity(0.3)
-                                : Color.white.opacity(0.06),
+                            equippedItem?.rarity.color.opacity(0.3) ?? Color.white.opacity(0.06),
                             lineWidth: 1
                         )
                 )

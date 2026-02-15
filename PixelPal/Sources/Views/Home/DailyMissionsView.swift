@@ -8,6 +8,10 @@ struct DailyMissionsView: View {
         PersistenceManager.shared.progressState.stepCoinBalance
     }
 
+    private var allMissionsCompleted: Bool {
+        appState.missionManager.completedCount == appState.missionManager.missions.count
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // Header: Quest Board + coin balance
@@ -43,14 +47,20 @@ struct DailyMissionsView: View {
                 questRow(mission)
             }
 
-            // Weekly challenge (premium only)
+            // Weekly challenge (premium only) or locked placeholder
             if let challenge = appState.missionManager.weeklyChallenge {
                 weeklyRow(challenge)
+            } else if !appState.storeManager.isPremium {
+                lockedWeeklyChallengeRow
             }
 
-            // Premium quests divider + locked rows
+            // Premium quests or post-completion upsell
             if !appState.storeManager.isPremium {
-                premiumQuestsSection
+                if allMissionsCompleted {
+                    postCompletionBanner
+                } else {
+                    premiumQuestsSection
+                }
             }
         }
     }
@@ -277,23 +287,101 @@ struct DailyMissionsView: View {
     // MARK: - Premium Quests
 
     private var premiumQuestsSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            // Dashed divider
-            Rectangle()
-                .stroke(style: StrokeStyle(lineWidth: 1, dash: [6, 4]))
-                .foregroundColor(Color(red: 0.49, green: 0.36, blue: 0.99).opacity(0.2))
-                .frame(height: 1)
+        Button(action: { appState.showPaywall = true }) {
+            VStack(alignment: .leading, spacing: 8) {
+                // Dashed divider
+                Rectangle()
+                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [6, 4]))
+                    .foregroundColor(Color(red: 0.49, green: 0.36, blue: 0.99).opacity(0.2))
+                    .frame(height: 1)
 
-            Text("PREMIUM QUESTS")
-                .font(.system(size: 10, weight: .medium))
-                .foregroundColor(Color(red: 0.49, green: 0.36, blue: 0.99).opacity(0.7))
-                .tracking(1)
+                Text("PREMIUM QUESTS")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(Color(red: 0.49, green: 0.36, blue: 0.99).opacity(0.7))
+                    .tracking(1)
 
-            // Locked quest rows
-            lockedQuestRow(title: "Evening Push — 2,000 steps after 5pm")
-            lockedQuestRow(title: "Stay Active — 500+ steps/hr for 4 hrs")
+                // Locked quest rows
+                lockedQuestRow(title: "Evening Push — 2,000 steps after 5pm")
+                lockedQuestRow(title: "Stay Active — 500+ steps/hr for 4 hrs")
+            }
+            .opacity(0.5)
         }
-        .opacity(0.5)
+    }
+
+    // MARK: - Locked Weekly Challenge
+
+    private var lockedWeeklyChallengeRow: some View {
+        let gold = Color(red: 1.0, green: 0.84, blue: 0.0)
+
+        return Button(action: { appState.showPaywall = true }) {
+            HStack(spacing: 10) {
+                HStack(spacing: 6) {
+                    Image(systemName: "crown.fill")
+                        .font(.system(size: 9))
+                        .foregroundColor(gold.opacity(0.5))
+                    Text("WEEKLY CHALLENGE")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundColor(gold.opacity(0.4))
+                        .tracking(1)
+                }
+
+                Spacer()
+
+                HStack(spacing: 4) {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 9))
+                        .foregroundColor(gold.opacity(0.4))
+                    Text("Unlock with Premium")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(gold.opacity(0.4))
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(gold.opacity(0.03))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(gold.opacity(0.1), lineWidth: 1)
+                    )
+            )
+            .opacity(0.6)
+        }
+    }
+
+    // MARK: - Post-Completion Banner
+
+    private var postCompletionBanner: some View {
+        let purple = Color(red: 0.49, green: 0.36, blue: 0.99)
+
+        return Button(action: { appState.showPaywall = true }) {
+            HStack(spacing: 10) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 14))
+                    .foregroundColor(purple)
+
+                Text("Unlock 2 bonus missions")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white.opacity(0.7))
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(purple.opacity(0.6))
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(purple.opacity(0.08))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(purple.opacity(0.2), lineWidth: 1)
+                    )
+            )
+        }
     }
 
     private func lockedQuestRow(title: String) -> some View {

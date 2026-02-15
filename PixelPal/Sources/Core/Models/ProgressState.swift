@@ -11,10 +11,10 @@ struct ProgressState: Codable, Equatable {
     var lastHealthKitSync: Date?
 
     /// Current evolution phase (1-4).
-    /// Phase 1: Dormant (0-25,000 steps)
-    /// Phase 2: Active (25,001-75,000 steps)
-    /// Phase 3: Energized (75,001-200,000 steps) - Premium
-    /// Phase 4: Ascended (200,001+ steps) - Premium
+    /// Phase 1: Seedling (0-25,000 steps)
+    /// Phase 2: Growing (25,001-75,000 steps)
+    /// Phase 3: Thriving (75,001-200,000 steps) - Premium
+    /// Phase 4: Legendary (200,001+ steps) - Premium
     var currentPhase: Int
 
     /// Whether the user has seen the paywall (shown after Phase 2 unlock).

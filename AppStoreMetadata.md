@@ -4,7 +4,7 @@
 
 **App Name:** Pixel Stepper
 
-**Subtitle:** Walk, evolve & customize your companion
+**Subtitle:** Walk, evolve & grow your companion
 
 **Category:** Health & Fitness
 
@@ -16,26 +16,29 @@
 
 Meet your walking companion that lives on your Lock Screen.
 
-Pixel Stepper transforms your daily steps into a living pixel character. No numbers to obsess over. No guilt trips. Just a tiny friend whose energy reflects your movement.
+Pixel Stepper turns your daily steps into a living pixel character. No guilt trips. No overwhelming dashboards. Just a tiny friend whose energy reflects how much you move.
 
 **How it works:**
 - Your character appears on your Lock Screen and Dynamic Island
 - Walk more, and they become more energetic
 - Complete daily missions to earn Step Coins
-- Customize your avatar with hats, backgrounds & accessories
+- Track your streak and build consistency
 - Keep walking to unlock new evolution phases
 
 **Features:**
 - Live Activity on Lock Screen & Dynamic Island
 - Adorable 2-frame pixel animation
-- 4 evolution phases to unlock
-- Daily missions & weekly challenges
-- Step Coins virtual currency
-- Cosmetic Shop with 30+ items
-- Streak tracking with daily goals
-- Share cards for social media
-- Home Screen widget
+- 4 evolution phases to unlock through walking
+- 3 daily missions that refresh every day
+- Weekly challenges for extra rewards
+- Step Coins earned through real movement
+- Streak tracking with daily step goals
+- 30-day activity calendar and personal records
+- Share cards to show off your progress
+- Home Screen widgets (small, medium, large)
 - No ads, no spam notifications
+
+**Coming soon:** Wardrobe & Cosmetic Shop — spend your Step Coins on hats, backgrounds, and accessories to style your companion.
 
 Pixel Stepper isn't another step counter. It's a quiet companion that walks with you.
 
@@ -43,19 +46,30 @@ Pixel Stepper isn't another step counter. It's a quiet companion that walks with
 
 ## Keywords
 
-pixel, walking, steps, fitness, pedometer, companion, tamagotchi, pet, widget, lock screen, dynamic island, health, motivation, avatar, customize
+pixel,walking,steps,pedometer,companion,tamagotchi,pet,widget,lock screen,dynamic island,fitness,streak,missions,motivation,avatar
 
 ---
 
 ## What's New (Version 2.1.0)
 
-Introducing the Cosmetic Shop! Spend your Step Coins on hats, backgrounds, and accessories to customize your pixel companion. Plus: weekly challenges, 2x coins for Premium members, improved HealthKit setup, and phase progress tracking in Stats.
+Massive update! Here's what's new:
+
+- Daily missions — complete 3 quests every day to earn Step Coins
+- Weekly challenges for bonus rewards
+- Streak tracking — build your daily walking streak
+- 30-day activity calendar and personal records
+- Step count front and center on the Home tab
+- Share cards to show off your progress
+- Improved widget with real-time step data
+- Phase progress tracking in Stats
+- Better HealthKit sync on app resume
+- Wardrobe & Cosmetic Shop coming soon!
 
 ---
 
 ## Promotional Text
 
-A tiny companion that reflects your daily movement. Earn coins, complete missions, and customize your avatar!
+Your daily steps bring a pixel companion to life — right on your Lock Screen. Complete missions, build streaks, and earn Step Coins!
 
 ---
 
@@ -97,7 +111,7 @@ For questions, contact akrammahmoud@example.com
 
 ## Support URL Text
 
-For support, email akrammahmoud@example.com
+https://github.com/amahmoud7/PixelPalFit/issues
 
 ---
 
@@ -121,14 +135,14 @@ Pixel Stepper reads step count data from HealthKit to determine the character's 
 **Live Activity:**
 The app uses Live Activities to display the pixel character on the Lock Screen and Dynamic Island. The character animates between 2 frames locally using TimelineView. Live Activity content updates when step count changes significantly (not continuously).
 
-**Step Coins & Cosmetics:**
-Step Coins are a virtual currency earned exclusively through walking activity (completing daily missions, maintaining streaks, hitting step milestones). They can only be spent in the in-app Cosmetic Shop on avatar customization items (hats, backgrounds, accessories). No real money can purchase Step Coins directly — they are purely earned through physical activity.
+**Step Coins:**
+Step Coins are a virtual currency earned exclusively through walking activity (completing daily missions, maintaining streaks, hitting step milestones). No real money can purchase Step Coins directly — they are purely earned through physical activity. A Cosmetic Shop where coins can be spent on avatar customization is planned for a future update and currently shows a "Coming Soon" prompt.
 
 **Business Model:**
 1. **Who are the users?** Health-conscious individuals who want a fun, gamified walking motivation app. The app is suitable for all ages (4+).
 2. **Where can users purchase features?** Premium subscriptions are available exclusively through Apple's in-app purchase system (StoreKit 2). The paywall is accessible from the Home tab (crown icon) and the Profile tab. Subscriptions are auto-renewable.
-3. **What can premium users access?** Premium subscribers unlock: all 4 evolution phases (free users get phases 1-2), 2x Step Coin earnings, exclusive cosmetic shop items, weekly challenges, streak freeze protection, and premium share card styles.
-4. **What is available without purchase?** The core app is fully functional for free: step tracking, pixel character animation, Live Activity, Home Screen widget, phases 1-2, 3 daily missions, streak tracking, basic cosmetic items (18 of 30), and standard share cards. Premium enhances the experience but is not required.
+3. **What can premium users access?** Premium subscribers unlock: all 4 evolution phases (free users get phases 1-2), 2x Step Coin earnings, weekly challenges, streak freeze protection, and premium share card styles.
+4. **What is available without purchase?** The core app is fully functional for free: step tracking, pixel character animation, Live Activity, Home Screen widget, phases 1-2, 3 daily missions, streak tracking, and standard share cards. Premium enhances the experience but is not required.
 
 **Demo Instructions:**
 1. Launch app and complete onboarding (select gender, tap "Continue")
@@ -137,9 +151,10 @@ Step Coins are a virtual currency earned exclusively through walking activity (c
 4. Swipe between Home, Stats, and Profile tabs
 5. Home tab: View avatar, streak info, daily missions
 6. Stats tab: View weekly history, personal records, phase progress
-7. Profile tab: Wardrobe, Cosmetic Shop, settings
-8. To test Premium: Profile tab → tap "Unlock Premium" or Home tab → crown icon
-9. Walk to see character energy change and missions progress
+7. Profile tab: Personal stats, Live Activity toggle, premium card
+8. Profile tab → Wardrobe shows "Coming Soon" alert (Cosmetic Shop in development)
+9. To test Premium: Profile tab → tap "Unlock Premium" or Home tab → crown icon
+10. Walk to see character energy change and missions progress
 
 ---
 
@@ -156,8 +171,8 @@ No objectionable content.
 1. "Meet your walking companion"
 2. "Lives on your Lock Screen"
 3. "Complete daily missions"
-4. "Customize with cosmetics"
-5. "Track your streak"
+4. "Track your streak & stats"
+5. "Evolve through 4 phases"
 
 ---
 
@@ -171,6 +186,6 @@ No objectionable content.
 - [ ] Upload privacy policy to web URL
 - [ ] Test on physical device
 - [ ] Verify HealthKit permission flow works correctly
-- [ ] Test cosmetic shop purchase and equip flow
+- [ ] Verify Wardrobe shows "Coming Soon" alert
 - [ ] Archive and upload build
 - [ ] Submit for review

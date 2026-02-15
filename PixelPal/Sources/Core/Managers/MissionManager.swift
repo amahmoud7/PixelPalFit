@@ -262,7 +262,7 @@ class MissionManager: ObservableObject {
 
     private var weeklyFileURL: URL {
         let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let dir = urls[0].appendingPathComponent("PixelPal", isDirectory: true)
+        let dir = (urls.first ?? URL(fileURLWithPath: NSTemporaryDirectory())).appendingPathComponent("PixelPal", isDirectory: true)
         if !FileManager.default.fileExists(atPath: dir.path) {
             try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         }
@@ -290,7 +290,7 @@ class MissionManager: ObservableObject {
 
     private var missionsFileURL: URL {
         let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let dir = urls[0].appendingPathComponent("PixelPal", isDirectory: true)
+        let dir = (urls.first ?? URL(fileURLWithPath: NSTemporaryDirectory())).appendingPathComponent("PixelPal", isDirectory: true)
         if !FileManager.default.fileExists(atPath: dir.path) {
             try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         }

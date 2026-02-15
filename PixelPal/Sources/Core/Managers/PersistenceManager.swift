@@ -33,7 +33,7 @@ class PersistenceManager: ObservableObject {
     /// Application Support directory for this app.
     private var appSupportURL: URL {
         let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let appSupport = urls[0].appendingPathComponent("PixelPal", isDirectory: true)
+        let appSupport = (urls.first ?? URL(fileURLWithPath: NSTemporaryDirectory())).appendingPathComponent("PixelPal", isDirectory: true)
 
         // Create directory if needed
         if !FileManager.default.fileExists(atPath: appSupport.path) {
@@ -149,7 +149,8 @@ class PersistenceManager: ObservableObject {
 
     private static func load<T: Decodable>(_ fileName: String, as type: T.Type) -> T? {
         let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let url = urls[0]
+        guard let baseURL = urls.first else { return nil }
+        let url = baseURL
             .appendingPathComponent("PixelPal", isDirectory: true)
             .appendingPathComponent(fileName)
 

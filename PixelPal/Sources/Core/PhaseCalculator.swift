@@ -26,10 +26,10 @@ struct PhaseCalculator {
 
     /// Phase names for display.
     static let phaseNames = [
-        1: "Dormant",
-        2: "Active",
-        3: "Energized",
-        4: "Ascended"
+        1: "Seedling",
+        2: "Growing",
+        3: "Thriving",
+        4: "Legendary"
     ]
 
     /// Phase descriptions for UI.

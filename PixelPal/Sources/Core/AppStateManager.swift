@@ -90,12 +90,21 @@ class AppStateManager: ObservableObject {
     }
 
     func fetchCumulativeSteps(healthManager: HealthKitManager) {
-        guard let profile = PersistenceManager.shared.userProfile else { return }
+        guard PersistenceManager.shared.userProfile != nil else { return }
+
+        // Invalidate cache so we always get a fresh query with the correct baseline
+        healthManager.invalidateCache()
+
+        // Use a far-back date to capture all HealthKit history, not just since profile creation.
+        // This ensures cumulative steps survive reinstalls and updates.
+        let allTimeStart = Calendar.current.date(byAdding: .year, value: -5, to: Date()) ?? Date()
 
         Task {
-            await healthManager.fetchCumulativeStepsAsync(since: profile.createdAt)
+            let fetched = await healthManager.fetchCumulativeStepsAsync(since: allTimeStart)
             await MainActor.run {
-                cumulativeSteps = healthManager.cumulativeSteps
+                // Never regress — take the max of fetched and persisted
+                let persisted = PersistenceManager.shared.progressState.totalStepsSinceStart
+                cumulativeSteps = max(fetched, persisted)
                 checkPhaseGraduation()
             }
         }

@@ -69,6 +69,9 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             NotificationManager.shared.cancelReEngagement()
             NotificationManager.shared.refreshSchedule()
+            // Refresh health data so SharedData + widget stay in sync
+            healthManager.fetchData()
+            appState.fetchCumulativeSteps(healthManager: healthManager)
         }
     }
 

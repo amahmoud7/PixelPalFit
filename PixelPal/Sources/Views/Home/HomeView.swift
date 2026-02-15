@@ -32,13 +32,25 @@ struct HomeView: View {
                     loadout: appState.currentLoadout
                 )
 
+                // Step count display
+                VStack(spacing: 2) {
+                    Text(Int(healthManager.currentSteps).formatted())
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                    Text("steps today")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundColor(.white.opacity(0.5))
+                }
+
                 // Streak hero (Glass Dashboard)
                 StreakHeroView(
                     streak: appState.currentStreak,
                     todaySteps: Int(healthManager.currentSteps),
                     dailyGoal: 7500,
                     missionsCompleted: appState.missionManager.completedCount,
-                    missionsTotal: appState.missionManager.missions.count
+                    missionsTotal: appState.missionManager.missions.count,
+                    isPremium: appState.storeManager.isPremium,
+                    onUpgradeTap: { appState.showPaywall = true }
                 )
                 .padding(.horizontal, 20)
 
@@ -159,9 +171,33 @@ struct HomeView: View {
 
     // MARK: - Top Bar
 
+    private var isReadyToEvolve: Bool {
+        guard !appState.storeManager.isPremium else { return false }
+        guard appState.currentPhase >= 2 else { return false }
+        return appState.weeklySteps >= PhaseCalculator.phase2Max
+    }
+
     private var topBar: some View {
         HStack {
             PhaseDisplayView(phase: appState.currentPhase, isPremium: appState.storeManager.isPremium)
+
+            if isReadyToEvolve {
+                Button(action: { appState.showPaywall = true }) {
+                    Text("Ready to evolve")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(red: 0.49, green: 0.36, blue: 0.99))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(Color(red: 0.49, green: 0.36, blue: 0.99).opacity(0.15))
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color(red: 0.49, green: 0.36, blue: 0.99).opacity(0.3), lineWidth: 1)
+                                )
+                        )
+                }
+            }
 
             Spacer()
 

@@ -395,6 +395,7 @@ private struct ExpandedBottomView: View {
                 .fill(Color.white.opacity(0.06))
                 .frame(height: 1)
         }
+        .padding(.horizontal, 4)
     }
 }
 

@@ -67,7 +67,7 @@ enum PhaseDecayStatus: String, Codable {
     
     var description: String {
         switch self {
-        case .strong: return "Energized"
+        case .strong: return "Thriving"
         case .neutral: return "Winding Down"
         case .tired: return "Resting"
         }

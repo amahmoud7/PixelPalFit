@@ -205,8 +205,8 @@ struct PaywallView: View {
                     // Restore
                     Button(action: restore) {
                         Text("Restore Purchases")
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundColor(.white.opacity(0.35))
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.white.opacity(0.6))
                     }
 
                     Spacer().frame(height: 12)
@@ -219,6 +219,16 @@ struct PaywallView: View {
                         .foregroundColor(.white.opacity(0.2))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 40)
+
+                    Spacer().frame(height: 8)
+
+                    // Privacy & Terms links
+                    HStack(spacing: 16) {
+                        Link("Privacy Policy", destination: URL(string: "https://pixelstepper.app/privacy")!)
+                        Link("Terms of Service", destination: URL(string: "https://pixelstepper.app/terms")!)
+                    }
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundColor(.white.opacity(0.3))
 
                     Spacer().frame(height: 40)
                 }
@@ -503,6 +513,15 @@ private struct PlanCard: View {
         return formatter.string(from: monthly as NSDecimalNumber)
     }
 
+    private var priceWithPeriod: String {
+        guard let sub = product.subscription else { return product.displayPrice }
+        switch sub.subscriptionPeriod.unit {
+        case .month: return "\(product.displayPrice)/mo"
+        case .year: return "\(product.displayPrice)/yr"
+        default: return product.displayPrice
+        }
+    }
+
     var body: some View {
         Button(action: {
             let impact = UIImpactFeedbackGenerator(style: .light)
@@ -541,7 +560,7 @@ private struct PlanCard: View {
 
                 Spacer()
 
-                Text(product.displayPrice)
+                Text(priceWithPeriod)
                     .font(.system(size: 17, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
             }

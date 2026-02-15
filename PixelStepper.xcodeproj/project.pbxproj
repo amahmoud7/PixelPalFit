@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -120,8 +120,8 @@
 		2186E031D2859844FEF730F7 /* ProgressState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressState.swift; sourceTree = "<group>"; };
 		2940CBBAE2B9B78CC9C820B9 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 		2A0AD1377273CAD4C0D4473F /* WeeklyChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyChallenge.swift; sourceTree = "<group>"; };
-		2E3B42FDFF4894985190C8F8 /* PixelPalWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PixelPalWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EDF8700E1D4BAF58BF46A11 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		2E3B42FDFF4894985190C8F8 /* PixelPalWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PixelPalWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EDF8700E1D4BAF58BF46A11 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3199A41A8A81D97CDF622A3E /* DailyProgressCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressCard.swift; sourceTree = "<group>"; };
 		3314D9DE450772F5CA4AAE61 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		35BA9F096DE4466C6B6700FF /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
@@ -154,12 +154,12 @@
 		A716078925E22BE0CE98619A /* DailyHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyHistory.swift; sourceTree = "<group>"; };
 		A734FBA6AA086796BCF8D341 /* PixelPalWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelPalWidget.swift; sourceTree = "<group>"; };
 		AB7EE32DD2EA6C74C827D60D /* CosmeticShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticShopView.swift; sourceTree = "<group>"; };
-		B3D916451ACAB16E7DD5B197 /* StoreKitConfiguration.storekit */ = {isa = PBXFileReference; path = StoreKitConfiguration.storekit; sourceTree = "<group>"; };
+		B3D916451ACAB16E7DD5B197 /* StoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitConfiguration.storekit; sourceTree = "<group>"; };
 		C4423C34CD31AEFCCAE29B4E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		CBBA09896F6B97E0B15682F1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		CBBA09896F6B97E0B15682F1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		CBE963BD0C4AACDC84CEF39D /* WardrobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeView.swift; sourceTree = "<group>"; };
 		CC7E60B685DE83222622B623 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		CDD45F2612EEABA23E6DBA52 /* PixelPal.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PixelPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD45F2612EEABA23E6DBA52 /* PixelPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixelPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA8D44AC8BB81DA1FE322BC /* CosmeticItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticItem.swift; sourceTree = "<group>"; };
 		D269C7C6C0BC1B75C4987FD8 /* StepMomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepMomentView.swift; sourceTree = "<group>"; };
 		D8ED1E8FB51EEC142A536AA9 /* StepMomentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepMomentManager.swift; sourceTree = "<group>"; };
@@ -475,7 +475,6 @@
 			);
 			mainGroup = E069E1A49DFD75C410C5496E;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -608,6 +607,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PixelPal/PixelPal.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6AU8GNH8CT;
 				INFOPLIST_FILE = PixelPal/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -624,6 +624,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = PixelPalWidget/PixelPalWidget.entitlements;
+				DEVELOPMENT_TEAM = 6AU8GNH8CT;
 				INFOPLIST_FILE = PixelPalWidget/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -643,6 +644,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PixelPal/PixelPal.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6AU8GNH8CT;
 				INFOPLIST_FILE = PixelPal/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -659,6 +661,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = PixelPalWidget/PixelPalWidget.entitlements;
+				DEVELOPMENT_TEAM = 6AU8GNH8CT;
 				INFOPLIST_FILE = PixelPalWidget/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
